@@ -1,0 +1,265 @@
+<div class="flex flex-col flex-auto min-w-0">   
+  <div *ngIf="Loader"  class="wrapper-loader mx-auto mt-6">
+    <img class="wrapper-loader mx-auto"
+        style="width: 100px; margin-left: auto; margin-right: auto;"
+        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+</div> 
+<div *ngIf="!Loader" class="flex-auto ">
+    <div class="w-full p-6 mx-auto">
+    <form [formGroup]="searchForm">
+    <div class="flex flex-col flex-auto bg-card shadow rounded-xl overflow-hidden">
+        <div class="flex justify-between p-1 px-6 bg-theme" style="align-items: center; ">
+            <span class=" flex items-center text-white  font-bold text-sm"  >Search History</span>
+            <button  class="rounded text-white min-h-0 h-7" style="font-size: 12px;" mat-stroked-button (click)="back()">Back</button>
+        </div>
+       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-4 pb-0 gap-y-0 w-full min-w-0">  
+        <div class="flex flex-col flex-auto overflow-hidden">
+          <mat-form-field class="w-full">
+              <mat-label>User</mat-label>
+              <mat-select formControlName="user" (ngModelChange)="userdata(searchForm.value.user)">
+                  <mat-option value="All">All</mat-option>
+                  <mat-option *ngFor="let user of userList ; let i = index" [value]="user.Id" >
+                      {{user.FirstName}} {{user.LastName}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field> 
+         </div> 
+        <div class="flex flex-col flex-auto overflow-hidden">
+            <mat-form-field class="w-full">
+                <mat-label>App</mat-label>
+                <mat-select formControlName="app" (ngModelChange)="fetchDomainList(searchForm.value.app)">
+                    <mat-option *ngFor="let app of appList ; let i = index" [value]="app.Id" >
+                        {{app.AppName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> 
+        </div>
+        <div class="flex flex-col flex-auto overflow-hidden">
+            <mat-form-field class="w-full">
+                <mat-label>Domain</mat-label>
+                <mat-select formControlName="domain">
+                    <mat-option *ngFor="let domain of domainList ; let i = index" [value]="domain.Id">
+                        {{domain.DomainName}}
+                    </mat-option>
+                </mat-select>
+                <div *ngIf="domainLoader" class="wrapper-loader">
+                  <img class="img-fluid"
+                      style="width: 30px; margin-left: auto; margin-right: auto;"
+                      src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                </div>
+            </mat-form-field> 
+        </div>
+        <div class="flex flex-col flex-auto overflow-hidden">
+          <mat-form-field class="w-full">
+              <mat-label>Page</mat-label>
+              <mat-select formControlName="page" >
+                  <mat-option *ngFor="let page of menuList ; let i = index" [value]="page.RouterLink" >
+                      {{page.MenuName}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field> 
+         </div>
+        <div class="flex flex-col flex-auto overflow-hidden">
+          <mat-form-field class="example-full-width">
+            <mat-label>From Date</mat-label>
+            <input matInput [matDatepicker]="date" (focus)="date.open()" formControlName="fromdate"
+            [min]="MinDate"
+            [max]="MaxDate">
+            <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+            <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+          </mat-form-field>
+          
+      </div>
+      <div class="flex flex-col flex-auto overflow-hidden">
+          <mat-form-field class="example-full-width">
+              <mat-label class="labelcss">To Date</mat-label>
+              <input matInput [matDatepicker]="date2" (focus)="date2.open()" formControlName="todate"
+              [min]="searchForm.controls['fromdate'].value"
+              [max]="MaxDate">
+              <mat-datepicker-toggle matSuffix [for]="date2"></mat-datepicker-toggle>
+              <mat-datepicker #date2></mat-datepicker>
+          </mat-form-field>
+      </div>
+      
+       
+        </div>
+        <div class="flex  items-center flex-auto overflow-hidden justify-end px-6 pb-6 pt-3">
+            <button class="fuse-mat-button-rounded mr-3" mat-flat-button (click)="reset()">
+                <span style="font-size: 12px;">Reset</span>
+            </button>
+            <button class="fuse-mat-button-rounded " mat-flat-button (click)="searchHistory()">
+                <span  *ngIf="!searchButton" style="font-size: 12px;">Search</span>
+                <div *ngIf="searchButton" class="wrapper-loader">
+                    <img class="img-fluid"
+                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                </div>
+            </button>
+        </div>
+   
+    </div>   
+    </form>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 w-full min-w-0 px-6">
+      <div class="text-center bg-card rounded-2xl shadow p-6 pb-0 mb-6" >
+          <apx-chart style="background-color: #b3dcc7 !important;"
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [xaxis]="chartOptions.xaxis"
+              [title]="chartOptions.title"
+              [colors]="chartOptions.colors"
+              [dataLabels]="chartOptions.dataLabels"
+          ></apx-chart>
+      </div>
+      <div class="text-center bg-card rounded-2xl shadow p-6 mb-6">
+        <form [formGroup]="graphMonth">
+          <div class="flex flex-col flex-auto overflow-hidden items-end">
+            <mat-form-field style="width: 150px" class="">
+                <mat-label>Select Month / {{year}}</mat-label>
+                <mat-select formControlName="monthName" (ngModelChange)="changeMonth(graphMonth.value.monthName)" >
+                    <!-- <mat-option *ngFor="let month of months ; let i = index" [value]="month" value="monthName">
+                        <span *ngIf="i >= gahsjd" [disabled]="false">{{month}}</span>
+                        <span *ngIf="i < gahsjd" [disabled]="true">{{month}}</span>
+                    </mat-option> -->
+                    <mat-option *ngFor="let month of months; let i = index" [value]="month" [disabled]="i > gahsjd">
+                      {{ month }}
+                    </mat-option>
+                    
+                </mat-select>
+                <div *ngIf="monthLoader" class="wrapper-loader">
+                  <img class="img-fluid"
+                      style="width: 30px; margin-left: auto; margin-right: auto;"
+                      src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                </div>
+            </mat-form-field> 
+          </div>
+        </form>
+        <div class="my-24" *ngIf="visits == 0">
+             <span class=" font-bold">No visits found for selected month </span>
+        </div>
+        <div *ngIf="visits != 0">
+          <apx-chart
+          [series]="chartOptions2.series"
+          [chart]="chartOptions2.chart"
+          [labels]="chartOptions2.labels"
+          [responsive]="chartOptions2.responsive"
+          [title]="chartOptions2.title"
+      ></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------ History Table ------------------------------>
+
+    <div class="w-full p-6 pt-0 mx-auto">
+    <div *ngIf="Loader"  class="wrapper-loader mx-auto mt-6">
+            <img class="wrapper-loader mx-auto"
+                style="width: 100px; margin-left: auto; margin-right: auto;"
+                src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+    </div>
+    <div *ngIf="!Loader" class="flex flex-col flex-auto bg-card shadow rounded-xl overflow-hidden">
+        <div >
+          <div class="flex justify-between bg-theme py-2 pl-6 pr-3" style="align-items: center;">
+            <span class=" flex items-center text-white  font-bold text-sm">History</span>
+            <div class="flex items-center">
+              <!-- <button  mat-icon-button class="flex  self-center" (click)="searchInput()"><mat-icon svgIcon="mat_solid:search" class="text-white icon-size-4"></mat-icon></button> -->
+              <button mat-icon-button class="flex self-center" [matMenuTriggerFor]="listMenu">
+                <mat-icon class="text-white icon-size-4" [svgIcon]="'mat_outline:settings'"></mat-icon>
+              </button>
+    
+              <mat-menu #listMenu="matMenu" >
+                <button mat-menu-item *ngFor="let checkbox of checkboxes"(click)="$event.stopPropagation()" >
+                  <mat-checkbox style="margin-left: 5px;" [(ngModel)]="checkbox.isChecked" (change)="onCheckboxChange($event)"></mat-checkbox>
+                  <div style="margin-left: 5px;">{{ checkbox.label }}</div>
+                </button>
+                <!-- <button mat-menu-item>
+                  <div style="margin-left: 19px;">Action</div>
+                </button> -->
+              </mat-menu>
+            </div>
+          </div>
+          <div *ngIf="searchField" class="flex justify-center mt-2" style="align-items: center;">
+            <mat-form-field class="example-full-width mr-6 " style="width: 70%; height: 41px">
+              <input matInput [formControl]="searchControl" placeholder="Search">
+              <div *ngIf="searchLoader" class="wrapper-loader">
+                <img class="img-fluid"
+                      style="width: 30px; margin-left: auto; margin-right: auto;"
+                      src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+              </div>
+            </mat-form-field>
+          </div>
+          <div class="mat-elevation-z8 border-t " style="overflow-x: auto;box-shadow: none!important;">
+          
+          <div *ngIf="historyList?.length != 0">
+           <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+        
+            <ng-container matColumnDef="Sr.No" >
+              <th mat-header-cell *matHeaderCellDef > Sr.No </th>
+              <td mat-cell *matCellDef="let element; let i = index" style="width: 80px;">
+                  {{ (page - 1) * pageSize + i + 1 }}
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="AppName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >App</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important;padding: 0px 12px!important; "> {{ element.AppName }} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="DomainName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Domain</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important;padding: 0px 12px!important; "> {{ element.DomainName }} {{ element.LastName }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="PackageName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Package</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important;padding: 0px 12px!important; "> {{ element.PackageName }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="PageName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Page</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important;padding: 0px 12px!important; "> {{ element.PageName }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="VisitTime">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header  >Visit Date & Time</th>
+                <td mat-cell *matCellDef="let element" style="text-align:left!important;padding: 0px 12px!important; "> {{ convertDate(element.VisitTime) }} </td>
+              </ng-container>
+    
+            <!-- <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Status </th>
+              <td mat-cell *matCellDef="let element" style="width: 100px;">
+                <div class="flex flex-row flex-auto overflow-hidden items-center px-2">
+                  <mat-form-field class="dropsearch status">
+                      <mat-select [(value)] = element.Active  (selectionChange)="updateStatus(element.Id, $event.value)">
+                          <mat-option *ngFor="let statuss of status" [value]="statuss.id" >
+                              {{statuss.name}}
+                            </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <button class="flex  self-center w-6 min-w-0 min-h-0 ml-1" mat-icon-button (click)="report(element.Id)"><mat-icon svgIcon="mat_solid:history" class="icon-size-4 text-blue-600"></mat-icon></button>
+                </div>
+              </td>
+            </ng-container> -->
+            
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+            </table>
+            <div class="flex justify-end" style="align-items: center;">
+              <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="recordsFiltered"  showFirstLastButtons>
+              </mat-paginator>
+            </div>
+          </div>
+          <div *ngIf="historyList?.length === 0  " class="text-center py-3">No records found</div>
+        
+        
+          </div>
+        
+        
+        </div>
+    </div>
+    </div>
+</div>
+</div>

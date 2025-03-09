@@ -1,0 +1,100 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div *ngIf="Loader" class="wrapper-loader mx-auto mt-6">
+        <img class="wrapper-loader mx-auto" style="width: 100px; margin-left: auto; margin-right: auto;" src="assets/images/icons/movingcar.gif" alt="" class="w30 rounded-full" />
+    </div>
+    <div *ngIf="!Loader" class="flex-auto ">
+        <div class="w-full p-6 mx-auto">
+            <form [formGroup]="detailsForm">
+                <div class="flex flex-col flex-auto bg-card shadow overflow-hidden p-6">
+                    <div class="flex justify-between border-b pb-6" style="align-items: center; ">
+                        <span class=" flex items-center text-black font-bold text-lg">{{formName}} Vehicle Details</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 py-4 gap-y-0 w-full min-w-0">
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Vehicle Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="Name">
+                                <mat-error *ngIf="detailsForm.get('Name').hasError('required')">Please enter name</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Registration No.<span class="red">*</span></mat-label>
+                                <input matInput formControlName="regNo">
+                                <mat-error *ngIf="detailsForm.get('regNo').hasError('required')">Please enter registration number</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Chassis No.<span class="red">*</span></mat-label>
+                                <input matInput formControlName="chassisNo">
+                                <mat-error *ngIf="detailsForm.get('chassisNo').hasError('required')">Please enter chassis number</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Model No.<span class="red">*</span></mat-label>
+                                <input matInput formControlName="modelNo">
+                                <mat-error *ngIf="detailsForm.get('modelNo').hasError('required')">Please enter model number</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Engine No.<span class="red">*</span></mat-label>
+                                <input matInput formControlName="engineNo">
+                                <mat-error *ngIf="detailsForm.get('engineNo').hasError('required')">Please enter engine number</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Vehicle type<span class="red">*</span></mat-label>
+                                <mat-select multiple formControlName="vehicleType" (selectionChange)="changeDomains($event.value)">
+                                    <mat-option *ngFor="let item of domainListData" [value]="item">
+                                        {{ item.DomainName }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="detailsForm.get('vehicleType').hasError('required')">Please select vehicle type
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Vehicle Colour<span class="red">*</span></mat-label>
+                                <input matInput formControlName="vehColor">
+                                <mat-error *ngIf="detailsForm.get('vehColor').hasError('required')">Please enter vehicle colour</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput formControlName="description" [rows]="4"></textarea>
+                                <mat-error *ngIf="detailsForm.get('description').hasError('required')">Please enter description
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="flex  items-center flex-auto overflow-hidden justify-start border-t pt-6">
+                        <button class="text-white min-h-0 h-10 mr-2" style="font-size: 12px;" mat-stroked-button (click)="back()">Back</button>
+
+                        <button *ngIf="!updatebutton" class="text-white min-h-0 h-10" style="font-size: 12px;" mat-stroked-button (click)="insertDetails()">
+                            <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                            <div *ngIf="showLoader" class="wrapper-loader">
+                                <img class="img-fluid"
+                                    style="width: 30px; margin-left: auto; margin-right: auto;"
+                                    src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                            </div>
+                        </button>
+                        <button *ngIf="updatebutton" class="text-white min-h-0 h-10" style="font-size: 12px;" mat-stroked-button (click)="updateDetails()">
+                            <span *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+                            <div *ngIf="showLoader" class="wrapper-loader">
+                                <img class="img-fluid"
+                                    style="width: 30px; margin-left: auto; margin-right: auto;"
+                                    src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

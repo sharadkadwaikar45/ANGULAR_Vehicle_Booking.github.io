@@ -1,0 +1,737 @@
+
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Main -->
+    <div class="flex-auto p-6">
+        <!-- CONTENT GOES HERE -->
+        <form  [formGroup]="appForm" >
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-0 gap-y-0 w-full min-w-0">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Select App Name : </mat-label>
+                <mat-select formControlName="appId" placeholder="Select app name" (ngModelChange)="getAppDataByID(appForm.value.appId)" >
+                    <mat-option [value]="null" disabled>Select app name</mat-option>
+                    <mat-option *ngFor="let app of appList" [value]="app.Id">
+                      {{app.AppName}}
+                    </mat-option>
+              </mat-select>
+              <div *ngIf="appListLoader"  class="wrapper-loader">
+                <img class="img-fluid"
+                style="width: 30px; margin-left: auto; margin-right: auto;"
+                src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+            </div>
+              </mat-form-field>
+        </div>
+        </form>
+
+        <div *ngIf="gettingDomains"  class="wrapper-loader mx-auto mt-6">
+            <img class="wrapper-loader mx-auto"
+                style="width: 100px; margin-left: auto; margin-right: auto;"
+                src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+        </div>
+        <div class=" overflow-hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-1 pt-4 gap-y-6 w-full min-w-0">
+                <div class="flex flex-col flex-auto overflow-hidden bg-card shadow rounded-xl"  *ngFor="let item of appListData ; let i=index">
+                    <form [formGroup]="domains">
+                        <!-- isPrimaryDomain -->
+                        <div class="p-2 bggreen text-md font-medium" >
+                                <mat-radio-button class="cstradio" [value]="item.isPrimaryDomain" [checked]="item.isPrimaryDomain === 1" matTooltip="Set as a primary" matTooltipPosition="above" (click)="setPrimary(item.Id)">
+                                  {{item.DomainName}}
+                                </mat-radio-button>
+                        </div>
+                        <div class="p-4">
+                            <mat-accordion>
+                                <mat-expansion-panel >
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                    <mat-icon class="self-center icon-size-5 mr-1" svgIcon="mat_solid:menu" ></mat-icon>
+                                   Menus
+                                  </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div *ngIf="item.Menus.length != 0">
+                                  <mat-list role="list" *ngFor="let menu of item.Menus">
+                                    <mat-list-item role="listitem" class="border-b hover:bg-gray-100"> 
+                                      <div class="flex items-center justify-between w-full">
+                                        <div>{{menu.MenuName}}</div>
+                                        <div> 
+                                          <!-- <mat-icon class="icon-size-4 mr-2" svgIcon="mat_solid:edit" (click)="editMenus(item.Id,item.Menus,item.MenuDomainMasterId)"></mat-icon> -->
+                                          <mat-icon class="icon-size-4 text-blue-700 cursorpointer" svgIcon="mat_solid:remove_red_eye" (click)="viewMenuDetails(menu.Id)" matTooltip="View or Edit Menu" matTooltipPosition="above"></mat-icon>
+                                        </div>
+                                      </div>
+                                    </mat-list-item>
+                                  </mat-list>
+                                  <mat-list>
+                                      <mat-list-item class="flex items-center justify-center mt-2">
+                                          <div >
+                                              <button  class="fuse-mat-button-rounded min-h-0 cursorpointer" mat-flat-button (click)="editMenus(item)">
+                                                  <span style="font-size: 12px;">Edit Menu List</span>
+                                              </button>
+                                          </div>
+                                      </mat-list-item>
+                                  </mat-list>
+                                </div>
+                                <div  *ngIf="item.Menus.length == 0">
+                                  <div class="flex items-center justify-between w-full">
+                                      <div class="ml-2 text-red-500 text-sm">No Menus Found</div>
+                                      <div><mat-icon class="flex self-center icon-size-5 text-blue-700 cursorpointer" svgIcon="add" (click)="addMenus(item.Id)" matTooltip="Add Menus" matTooltipPosition="above"></mat-icon></div>
+                                  </div>
+                                </div>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel >
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      <mat-icon class="self-center icon-size-5 mr-1" svgIcon="mat_solid:image" ></mat-icon>
+                                     Banner
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <div *ngIf="item.Banner != null">
+                                      <div class="relative">
+                                        <mat-icon class="icon-size-4 " style="color: red; cursor: pointer; position: absolute; right:10px; top:10px;" matTooltip="Edit Banner" matTooltipPosition="above" (click)="editBanner(item)">edit</mat-icon>
+                                        <img class="cover cursorpointer" 
+                                        src="{{item.Banner.Image}}" alt="banner image" 
+                                        style="object-fit: contain; height: 120px; max-width: 100% ; border: 1px dashed black;"
+                                        (click)="openImgDialog(item.Banner.Image)">
+      
+                                      </div>
+                                  </div>
+                                  <div *ngIf="item.Banner == null">
+                                      <div class="flex items-center justify-between w-full">
+                                          <div class="ml-2 text-red-500 text-sm">No Banner Found</div>
+                                          <div><mat-icon class="flex self-center icon-size-5 text-blue-700 cursorpointer" svgIcon="add" (click)="addBanner(item.Id)" matTooltip="Add Banner" matTooltipPosition="above"></mat-icon></div>
+                                      </div>
+                                  </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel >
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      <mat-icon class="self-center icon-size-5 mr-1" svgIcon="mat_solid:bookmark" ></mat-icon>
+                                     Plans
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <div *ngIf="item.Plans.length != 0">
+                                    <mat-list role="list" *ngFor="let plan of item.Plans">
+                                        <mat-list-item role="listitem" class="border-b hover:bg-gray-100">
+                                           <div class="flex items-center justify-between w-full">
+                                              <div>{{plan.PlanName}}</div>
+                                              <div> <mat-icon class="icon-size-4 text-blue-700 cursorpointer" svgIcon="mat_solid:remove_red_eye"  (click)="viewPlanDetails(plan.Id)"></mat-icon></div>
+                                          </div></mat-list-item>
+                                    </mat-list>
+                                  </div>
+                                  <div  *ngIf="item.Plans.length == 0">
+                                      <div class="flex items-center justify-between w-full">
+                                          <div class="ml-2 text-red-500  text-sm">No Plans Found</div>
+                                          <div><mat-icon class="flex self-center icon-size-5 text-blue-700 cursorpointer" svgIcon="add" (click)="addPlan(item.Id)" matTooltip="Add Plan" matTooltipPosition="above"></mat-icon></div>
+                                      </div>
+                                  </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+          <!-- CONTENT GOES HERE END -->
+    </div>
+</div>
+
+<!-- -------------------- view Menus -------------------- -->
+
+<div class="popcenter" >
+    <ng-template #callAPIDialog1>
+        <div class="overflow-hidden max-w-full relative" style="width: 70vw;">
+            <mat-icon svgIcon="mat_outline:close"
+                style="color: red; cursor: pointer; position: absolute; z-index: 111; top: 17px; right:17px"
+                matDialogClose="yes" (click)="close()"></mat-icon>
+            <div class="max-w-10xl" style="overflow-x: auto;">
+                <div class="flex-auto ">
+                    <div class="w-full mx-auto" style="height: 400px; overflow-y: auto;">
+                        <form [formGroup]="menuForm">
+                            <div class="flex flex-col flex-auto bg-card  rounded-xl overflow-hidden">
+                                <div class="flex justify-between p-3 px-6 bg-theme" style="align-items: center; ">
+                                    <span class=" flex items-center text-white  font-bold text-sm"  >Menu Form</span>
+                                </div>
+                                <div *ngIf="Loader"  class="wrapper-loader mx-auto mt-6">
+                                    <img class="wrapper-loader mx-auto"
+                                        style="width: 100px; margin-left: auto; margin-right: auto;"
+                                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                </div>
+                                <div  *ngIf="!Loader">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-4 pb-0 gap-y-0 w-full min-w-0">
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Menu Name<span class="red">*</span></mat-label>
+                                                <input matInput formControlName="menuName"  >
+                                                <mat-error *ngIf="menuForm.get('menuName').hasError('required')">Please enter
+                                                    menu name</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Icon Image<span class="red">*</span></mat-label>
+                                                <div *ngIf="menuForm.value.iconName != ''" class="flex flex-col flex-auto overflow-hidden">
+                                                    <div  class="">
+                                                        <div class="rounded w-5 mr-2">
+                                                            <img class="position-relative shadow-sm  cursorpointer cover"
+                                                                src="assets/menus/{{menuForm.value.iconName}}"
+                                                                accept="image" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-select formControlName="iconName">
+                                                    <mat-option *ngFor="let icon of iconList"  [value]="icon">
+                                                        <div class="flex items-center">
+                                                            <img src="assets/menus/{{icon}}" alt="" class="mr-2 w-5"  >{{icon}} 
+                                                        </div>
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="menuForm.get('iconName').hasError('required')">Please select 
+                                                 icon image</mat-error>
+                                        </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Icon Type<span class="red">*</span></mat-label>
+                                                <mat-select formControlName="iconType">
+                                                    <mat-option *ngFor="let type of Icons" [value]="type.name">
+                                                        {{type.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                              <mat-error *ngIf="menuForm.get('iconType').hasError('required')">Please select 
+                                                icon type</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Router Link<span class="red">*</span></mat-label>
+                                                <mat-select formControlName="routerlinkType" (ngModelChange)="updateLinkValue()">
+                                                    <mat-option *ngFor="let type of RoutrLink" [value]="type.name" >
+                                                        {{type.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="menuForm.get('routerlinkType').hasError('required')">Please select
+                                                    router link type</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div *ngIf="menuForm.value.routerlinkType == 'Page Link'" class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Page Link</mat-label>
+                                                <input matInput formControlName="pageLink"  >
+                                                <mat-error *ngIf="menuForm.get('pageLink').hasError('required')">Please enter
+                                                    page link</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div *ngIf="menuForm.value.routerlinkType == 'Page Component'" class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Page Component</mat-label>
+                                                <mat-select formControlName="pageComponent">
+                                                    <mat-option *ngFor="let type of pageListData" [value]="type.Title">
+                                                        {{type.Title}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="menuForm.get('pageComponent').hasError('required')">Please select
+                                                    page component</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Attribute</mat-label>
+                                                <input matInput formControlName="attribute"  >
+                                                <mat-error *ngIf="menuForm.get('attribute').hasError('required')">Please enter
+                                                    attribute</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Click Method</mat-label>
+                                                <input matInput formControlName="clickMethod"  >
+                                                <mat-error *ngIf="menuForm.get('clickMethod').hasError('required')">Please enter 
+                                                click method</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Order</mat-label>
+                                                <mat-select formControlName="order">
+                                                    <mat-option *ngFor="let order of orders ; let i = index" [value]="i+1">
+                                                        {{i+1}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="menuForm.get('order').hasError('required')">Please select
+                                                    order</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden mt-4">
+                                            <mat-checkbox formControlName="isPremium" (change)="updateTopMenuValue($event)">
+                                              <mat-label class="normallabel">Is Premium ?</mat-label>
+                                            </mat-checkbox>
+                                        </div>
+                                        </div>
+                                        <div class="flex items-center flex-auto overflow-hidden justify-end p-6 pt-2 ">
+                                            <button *ngIf="!updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="insertDomainMenuMaster()">
+                                                <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                                                <div *ngIf="showLoader" class="wrapper-loader">
+                                                    <img class="img-fluid"
+                                                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                                </div>
+                                            </button>
+                                            <button *ngIf="updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="updateDomainMenuMaster()">
+                                                <span  *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+                                                <div *ngIf="showLoader" class="wrapper-loader">
+                                                    <img class="img-fluid"
+                                                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                                </div>
+                                            </button>
+                                        </div>
+                                </div>
+                                
+                           
+                            </div>   
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<!-- -------------------- Add Menus -------------------- -->
+
+<div class="popcenter">
+    <ng-template #callAPIDialog2>
+      <div class="overflow-hidden max-w-full relative" style="width: 70vw;">
+          <mat-icon svgIcon="mat_outline:close"
+              style="color: red; cursor: pointer; position: absolute; z-index: 111; top: 17px; right:17px"
+              matDialogClose="yes" (click)="close()"></mat-icon>
+          <div class="max-w-10xl">
+              <div class="flex-auto ">
+                  <div class="w-full mx-auto">
+                    <form [formGroup]="addMenuForm">
+                      <div class=" flex flex-col flex-auto bg-card  rounded-xl overflow-hidden">
+                          <div class="flex justify-between p-3 px-6 bg-theme" style="align-items: center; ">
+                              <span class=" flex items-center text-white  font-bold text-sm"  >Add Menus Form</span>
+                          </div>
+                          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-4 pb-0 gap-y-0 w-full min-w-0">
+                              <div class="flex flex-col flex-auto overflow-hidden">
+                                  <mat-form-field class="w-full">
+                                      <mat-label>App<span class="red">*</span></mat-label>
+                                      <mat-select formControlName="menuAppId"  >
+                                          <mat-option [disabled]="isDataBound" *ngFor="let app of appList" [value]="app.Id">
+                                              {{app.AppName}}
+                                            </mat-option>
+                                      </mat-select>
+                                      <div *ngIf="appLoader" class="wrapper-loader">
+                                          <img class="img-fluid"
+                                              style="width: 30px; margin-left: auto; margin-right: auto;"
+                                              src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                      </div>
+                                  </mat-form-field>
+                              </div>
+                              <div class="flex flex-col flex-auto overflow-hidden">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Domain<span class="red">*</span></mat-label>
+                                    <mat-select formControlName="menuDomainId"  >
+                                        <mat-option [disabled]="isDataBound" *ngFor="let domain of appListData" [value]="domain.Id"  >
+                                            {{domain.DomainName}}
+                                          </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="domainLoader" class="wrapper-loader">
+                                        <img class="img-fluid"
+                                            style="width: 30px; margin-left: auto; margin-right: auto;"
+                                            src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex flex-col flex-auto overflow-hidden">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Menus<span class="red">*</span></mat-label>
+                                    <mat-select multiple formControlName="appMenus" (selectionChange)="changeMenu(addMenuForm.value.appMenus)" >
+                                      <mat-option *ngFor="let item of menuListData" [value]="item">
+                                        {{ item.MenuName }}
+                                      </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <div *ngIf="selectedMenu?.length != 0" class="rounded-lg bg-gray-200 p-3 px-6">
+                                    {{selectedMenu?.value}}
+                                    <mat-label class="font-bold ">Selected Menus:</mat-label>
+                                    <div class="flex flex-col flex-auto overflow-hidden" *ngFor="let item of selectedMenu; let i = index">
+                                      <mat-label class="flex items-center justify-between selected">{{i+1}} : {{item.MenuName}}
+                                          <div>
+                                              <mat-icon class="icon-size-4 text-red-500 ml-5" svgIcon="mat_outline:close" (click)="removeMenu(i , item.Id,menuIndex)"  matTooltip="Remove Menu" matTooltipPosition="above"></mat-icon>
+                                          </div> 
+                                      </mat-label>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-1 p-6 gap-y-0 w-full min-w-0">
+                              <div class="flex  items-center flex-auto overflow-hidden justify-end">
+                                <button *ngIf="!updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="insertMenuDetails()">
+                                  <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                                  <div *ngIf="showLoader" class="wrapper-loader">
+                                      <img class="img-fluid"
+                                          style="width: 30px; margin-left: auto; margin-right: auto;"
+                                          src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                  </div>
+                              </button>
+                              <button *ngIf="updatebutton" class="fuse-mat-button-rounded  " mat-flat-button (click)="updateMenuDetails()">
+                                  <span  *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+                                  <div *ngIf="showLoader" class="wrapper-loader">
+                                      <img class="img-fluid"
+                                          style="width: 30px; margin-left: auto; margin-right: auto;"
+                                          src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                  </div>
+                              </button>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                   </div>
+              </div>
+          </div>
+      </div>
+    </ng-template>
+</div>
+
+<!-- -------------------- view banner -------------------- -->
+    
+<div class="popcenter">
+    <ng-template #callAPIDialog3>
+      <div class="flex flex-auto justify-between overflow-hidden relative"
+          *ngIf="showAllDocImg == 1 && ImagedocumentType=='alldocOpenImage'">
+          <h2 matDialogTitle class="font-medium text-xl">viewImage</h2>
+      </div>
+      <div class="overflow-hidden max-w-full relative" style="width: 60vw;">
+          <mat-icon svgIcon="mat_outline:close"
+              style="color: red; cursor: pointer; position: absolute; z-index: 111; top: 1px; right: 1px;"
+              matDialogClose="yes" (click)="close()"></mat-icon>
+          <div class="max-w-10xl">
+              <img style="height: 270px;"
+                  class="position-relative maxwh cursorpointer" title=""
+                  src="{{image}} " accept="image" />
+          </div>
+      </div>
+    </ng-template>
+</div>
+
+<!-- -------------------- add and edit banner -------------------- -->
+
+<div class="popcenter">
+    <ng-template #callAPIDialog4>
+      <div class="overflow-hidden max-w-full relative" style="width: 70vw;">
+          <mat-icon svgIcon="mat_outline:close"
+              style="color: red; cursor: pointer; position: absolute; z-index: 111; top: 17px; right:17px"
+              matDialogClose="yes" (click)="close()"></mat-icon>
+          <div class="max-w-10xl">
+              <div class="flex-auto ">
+                  <div class="w-full mx-auto" >
+                    <form [formGroup]="imagesForm" >
+                      <div class="flex flex-col flex-auto bg-card  rounded-xl overflow-hidden">
+                              <div class=" flex justify-between  bg-theme p-3 px-6" style="align-items: center;">
+                                  <span class=" flex items-center text-white  font-bold text-sm"  >Banner Image</span>
+                              </div>
+                              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-4 pb-0 gap-y-0 w-full min-w-0">
+                                  <div class="flex flex-col flex-auto overflow-hidden">
+                                      <mat-form-field class="w-full">
+                                          <mat-label>Banner Name<span class="red">*</span></mat-label>
+                                          <input matInput formControlName="banner"  >
+                                          <mat-error *ngIf="imagesForm.get('banner').hasError('required')">Please enter
+                                              banner name</mat-error>
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="flex flex-col flex-auto overflow-hidden">
+                                      <mat-form-field class="w-full">
+                                          <mat-label>App</mat-label>
+                                          <mat-select formControlName="bannerApp">
+                                              <mat-option [disabled]="isDataBound" *ngFor="let app of appList" [value]="app.Id">
+                                                  {{app.AppName}}
+                                                </mat-option>
+                                          </mat-select>
+                                          <div *ngIf="appLoader" class="wrapper-loader">
+                                              <img class="img-fluid"
+                                                  style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                  src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                          </div>
+                                        <mat-error *ngIf="imagesForm.get('bannerApp').hasError('required')">Please select 
+                                          app</mat-error>
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="flex flex-col flex-auto overflow-hidden">
+                                      <mat-form-field class="w-full">
+                                          <mat-label>Domain</mat-label>
+                                          <mat-select formControlName="bannerDomain">
+                                              <mat-option [disabled]="isDataBound" *ngFor="let domain of appListData" [value]="domain.Id">
+                                                  {{domain.DomainName}}
+                                                </mat-option>
+                                          </mat-select>
+                                          <div *ngIf="domainLoader" class="wrapper-loader">
+                                              <img class="img-fluid"
+                                                  style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                  src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                          </div>
+                                        <mat-error *ngIf="imagesForm.get('bannerDomain').hasError('required')">Please select 
+                                          domain</mat-error>
+                                      </mat-form-field>
+                                  </div>
+                                  <div class="flex flex-col flex-auto overflow-hidden">
+                                      <mat-form-field class="w-full">
+                                          <mat-label>Description</mat-label>
+                                          <textarea matInput formControlName="bannerDesc" [rows]="4"  ></textarea>
+                                          <mat-error *ngIf="imagesForm.get('bannerDesc').hasError('required')">Please enter
+                                              description</mat-error>
+                                      </mat-form-field>
+                                  </div>
+                              </div>
+                              <div class="grid grid-cols-1  gap-6 px-6 pt-3 gap-y-0 w-full min-w-0 font-xs">
+                                  <div>
+                                      <span class="warning">Note: Image must be in png or jpg format with dimension 200px x 300px and must be within 100kb</span>
+                                  </div>
+                              </div>
+                              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-1 pb-0 gap-y-0 w-full min-w-0">
+                                  <mat-label class="normallabel mb-1" style=" font-size: 10px; font-weight: 600; ">
+                                      Banner Image <span class="red">*</span>
+                                  </mat-label>
+                              </div>
+                              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 px-6 gap-y-0 w-full min-w-0">
+                                  <div class="flex flex-row items-center flex-auto overflow-hidden">
+                                      <div>
+                                          <input id="image-file-input3"
+                                              class="absolute h-0 w-0 opacity-0 invisible pointer-events-none bg-white"
+                                              (change)="onFileChange($event,'bannerDocument',$event.target.files)"
+                                              type="file" [multiple]="false"
+                                              [accept]="'image/jpg,image/jpeg,image/png,application/pdf'" #imageFileInput3 />
+                                              <label
+                                              class="flex items-center justify-center w-24 h-7 text-black rounded cursor-pointer uplodBtn"
+                                              for="image-file-input3" matRipple>
+                                              <mat-icon svgIcon="mat_outline:add_photo_alternate"
+                                                  class="text-black w-4 h-4 min-w-0"></mat-icon>
+                                              <span class="ml-1 mr-1 black " style="font-size: 10px;">Upload</span>
+                                          </label>
+                                      </div>
+                                      <div *ngIf="docLoader" class="wrapper-loader ml-6">
+                                              <img class="img-fluid"
+                                                  style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                  src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                      </div> 
+                                      <div *ngIf="!docLoader" class="ml-4">
+                                          <div class="border rounded bg-gray-50"
+                                              *ngIf="imagesForm.value.bannerDocument_FrontFileName !=''">
+                                              <img class="position-relative shadow-sm maxwh cursorpointer cover"
+                                                  style="object-fit: contain; height: 40px;"
+                                                  (click)="openImgDialog(imagesForm.value.bannerDocument_FrontFilePath)"
+                                                  src="{{imagesForm.value.bannerDocument_FrontFilePath}}"
+                                                  accept="image" />
+                                             </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              <div class="grid grid-cols-1  gap-6 p-6  gap-y-0 w-full min-w-0">
+                              <div class="flex  items-center flex-auto overflow-hidden justify-end ">
+                                  <button *ngIf="!updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="insertBannerDetails()">
+                                      <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                                      <div *ngIf="showLoader" class="wrapper-loader">
+                                          <img class="img-fluid"
+                                              style="width: 30px; margin-left: auto; margin-right: auto;"
+                                              src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                      </div>
+                                  </button>
+                                  <button *ngIf="updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="updateBannerDetails()">
+                                      <span  *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+                                      <div *ngIf="showLoader" class="wrapper-loader">
+                                          <img class="img-fluid"
+                                              style="width: 30px; margin-left: auto; margin-right: auto;"
+                                              src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                      </div>
+                                  </button>
+                              </div>
+                          </div>
+                          </div>   
+                  </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </ng-template>
+</div>
+
+<!-- -------------------- view plan -------------------- -->
+
+<div class="popcenter">
+    <ng-template #callAPIDialog5>
+        <div class="overflow-hidden max-w-full relative" style="width: 70vw;">
+            <mat-icon svgIcon="mat_outline:close"
+                style="color: red; cursor: pointer; position: absolute; z-index: 111; top: 17px; right:17px"
+                matDialogClose="yes" (click)="close()"></mat-icon>
+            <div class="max-w-10xl">
+                <div class="flex-auto ">
+                    <div class="w-full mx-auto" style="height: 500px; overflow-y: auto;">
+                        <form [formGroup]="planForm">
+                            <div class="flex flex-col flex-auto bg-card  rounded-xl overflow-hidden">
+                                <div class="flex justify-between p-3 px-6 bg-theme" style="align-items: center; ">
+                                    <span class=" flex items-center text-white  font-bold text-sm"  >Plan Form</span>
+                                </div>
+                                <div *ngIf="Loader"  class="wrapper-loader mx-auto mt-6">
+                                    <img class="wrapper-loader mx-auto"
+                                        style="width: 100px; margin-left: auto; margin-right: auto;"
+                                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                </div>
+                                <div  *ngIf="!Loader">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-4 pb-0 gap-y-0 w-full min-w-0">   
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Plan Name<span class="red">*</span></mat-label>
+                                                <input matInput formControlName="plan">
+                                                <mat-error *ngIf="planForm.get('plan').hasError('required')">Please enter 
+                                                plan name</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <!-- <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Domain<span class="red">*</span></mat-label>
+                                                <mat-select formControlName="domain">
+                                                    <mat-option [disabled]="isDataBound" *ngFor="let domain of appListData ; let i = index" [value]="domain.Id">
+                                                        {{domain.DomainName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="planForm.get('domain').hasError('required')">Please select
+                                                   domain</mat-error>
+                                            </mat-form-field> 
+                                        </div> -->
+                                        
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Price<span class="red">*</span></mat-label>
+                                                <input matInput formControlName="price" (keypress)="checkValidInputData($event,1)" (input)="calculatValue()">
+                                                <mat-error *ngIf="planForm.get('price').hasError('required')">Please enter 
+                                                price</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Discount (%)</mat-label>
+                                                <input matInput formControlName="discount" (keypress)="checkValidInputData($event,1)" (input)="calculatValue()">
+                                                <mat-error *ngIf="planForm.get('discount').hasError('required')">Please enter 
+                                                    discount</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <!-- <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Revised Amount</mat-label>
+                                                <input matInput readonly [value]="discountValue">
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Plan Validity<span class="red">*</span></mat-label>
+                                                <mat-select formControlName="planValidity">
+                                                    <mat-option *ngFor="let validity of PlanValidity ; let i = index" [value]="validity.name">
+                                                        {{validity.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="planForm.get('planValidity').hasError('required')">Please select
+                                                   plan validity</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                              <mat-label>Domains<span class="red">*</span></mat-label>
+                                              <mat-select multiple formControlName="domain" (selectionChange)="changeDomains($event.value)">
+                                                <mat-option *ngFor="let item of domainListData" [value]="item">
+                                                  {{ item.DomainName }}
+                                                </mat-option>
+                                              </mat-select>
+                                              <mat-error *ngIf="planForm.get('domain').hasError('required')">Please select
+                                                domains</mat-error>
+                                            </mat-form-field>
+                                            <div *ngIf="selectedDomains?.length != 0" class="rounded-lg bg-gray-200 p-3 px-6">
+                                              <mat-label class="font-bold ">Selected Domains:</mat-label>
+                                              <div class="flex flex-col flex-auto overflow-hidden" *ngFor="let item of selectedDomains; let i = index">
+                                                <mat-label class="flex items-center justify-between">{{i+1}} : {{item.DomainName}}
+                                                    <div>
+                                                        <mat-icon class="icon-size-5 text-red-500 ml-5" svgIcon="mat_outline:close" (click)="removeDomains(i , item.Id)"  matTooltip="Remove Domain" matTooltipPosition="above"></mat-icon>
+                                                    </div> 
+                                                </mat-label>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col flex-auto overflow-hidden">
+                                            <mat-form-field class="w-full">
+                                              <mat-label>Menus<span class="red">*</span></mat-label>
+                                              <mat-select multiple formControlName="planMenus" (selectionChange)="changePlanMenus($event.value)">
+                                                <mat-option *ngFor="let item of subscribeMenuList" [value]="item">
+                                                  {{ item.MenuName }}
+                                                </mat-option>
+                                              </mat-select>
+                                              <mat-error *ngIf="planForm.get('planMenus').hasError('required')">Please select
+                                                menus</mat-error>
+                                            </mat-form-field>
+                                            <div *ngIf="selectedPlanMenus?.length != 0" class="rounded-lg bg-gray-200 p-6">
+                                              <mat-label class="font-bold ">Selected Menus:</mat-label>
+                                              <div class="flex flex-col flex-auto overflow-hidden" *ngFor="let item of selectedPlanMenus; let i = index">
+                                                <mat-label class="flex items-center justify-between">{{i+1}} : {{item.MenuName}}
+                                                    <div>
+                                                        <mat-icon class="icon-size-5 text-red-500 ml-5" svgIcon="mat_outline:close" (click)="removeMenus(i , item.Id)"  matTooltip="Remove Menu" matTooltipPosition="above"></mat-icon>
+                                                    </div> 
+                                                </mat-label>
+                                              </div>
+                                            </div>
+                                        </div>
+                                       </div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 px-6 gap-y-0 w-full min-w-0">  
+                                            <div >
+                                                <form [formGroup]="descriptionData" >
+                                                    <div formArrayName="descriptionArray">
+                                                        <div *ngFor="let descriptionArray of descriptionArray().controls; let descIndex = index "  class="flex flex-col flex-auto overflow-hidden">
+                                                            <div [formGroupName]="descIndex" >
+                                                                <td class="hidden">
+                                                                    <mat-form-field class="w-full">
+                                                                       <input matInput formControlName="id">
+                                                                    </mat-form-field>
+                                                                </td>
+                                                                <mat-form-field class="w-full">
+                                                                    <mat-label>Description<span *ngIf="descIndex >= 1"> {{descIndex + 1}}</span></mat-label>
+                                                                    <input matInput formControlName="description"  (input)="addMember()">
+                                                                    <mat-error *ngIf="descriptionArray.get('description').hasError('required')">Please
+                                                                        enter description <span *ngIf="descIndex >= 1">{{descIndex + 1}} or delete</span></mat-error>
+                                                                    <button  mat-icon-button *ngIf="descriptionData.get('descriptionArray').length == descIndex + 1" (click)="addItem()" [disabled]="!showAddButton"><mat-icon svgIcon="mat_outline:add" class="icon-size-4 text-blue-600" matTooltip="Add Description" 
+                                                                        matTooltipPosition="above"></mat-icon></button>
+                                                                    <button *ngIf="descIndex >= 1" mat-icon-button  (click)="removeItem(descriptionArray,descIndex)"><mat-icon svgIcon="mat_solid:delete" class="icon-size-4 text-red-600" matTooltip="delete" 
+                                                                        matTooltipPosition="above"></mat-icon></button>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="flex  items-center flex-auto overflow-hidden justify-end px-6 pb-6 pt-3">
+                                            <button *ngIf="!updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="insertPlanDetails()">
+                                                <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                                                <div *ngIf="showLoader" class="wrapper-loader">
+                                                    <img class="img-fluid"
+                                                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                                </div>
+                                            </button>
+                                            <button *ngIf="updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="updatePlanDetails()">
+                                                <span  *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+                                                <div *ngIf="showLoader" class="wrapper-loader">
+                                                    <img class="img-fluid"
+                                                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                                </div>
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>   
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

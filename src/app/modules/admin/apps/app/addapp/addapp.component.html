@@ -1,0 +1,94 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div *ngIf="Loader" class="wrapper-loader mx-auto mt-6">
+        <img class="wrapper-loader mx-auto" style="width: 100px; margin-left: auto; margin-right: auto;" src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+    </div>
+    <div *ngIf="!Loader" class="flex-auto ">
+        <div class="w-full p-6 mx-auto">
+            <form [formGroup]="appForm">
+                <div class="flex flex-col flex-auto bg-card shadow rounded-xl overflow-hidden">
+                    <div class="flex justify-between p-1 px-6 bg-theme" style="align-items: center; ">
+                        <span class=" flex items-center text-white  font-bold text-sm">App Form</span>
+                        <button class="rounded text-white min-h-0 h-7" style="font-size: 12px;" mat-stroked-button (click)="back()">Back</button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 p-6 pt-4 pb-0 gap-y-0 w-full min-w-0">
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>App Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="appName">
+                                <mat-error *ngIf="appForm.get('appName').hasError('required')">Please enter app name</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Packege Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="packageName">
+                                <mat-error *ngIf="appForm.get('packageName').hasError('required')">Please enter packege name</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Api url<span class="red">*</span></mat-label>
+                                <input matInput formControlName="apiUrl">
+                                <mat-error *ngIf="appForm.get('apiUrl').hasError('required')">Please enter api url</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Domains<span class="red">*</span></mat-label>
+                                <mat-select multiple formControlName="domain" (selectionChange)="changeDomains($event.value)">
+                                    <mat-option *ngFor="let item of domainListData" [value]="item">
+                                        {{ item.DomainName }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="appForm.get('domain').hasError('required')">Please select domain
+                                </mat-error>
+                            </mat-form-field>
+                            <div *ngIf="selectedDomains?.length != 0" class="rounded-lg bg-gray-200 p-3 px-6">
+                                <mat-label class="font-bold ">Selected Domains:</mat-label>
+                                <div class="flex flex-col flex-auto overflow-hidden" *ngFor="let item of selectedDomains; let i = index">
+                                    <mat-label class="flex items-center justify-between">
+                                        <div>
+                                            <mat-radio-button [value]="item.Id" [checked]="item.Id === appData?.PrimaryDomain" matTooltip="Set as a primary" matTooltipPosition="above" (change)="setPrimary(item.Id)">
+                                                {{i+1}} : {{item.DomainName}}</mat-radio-button>
+                                        </div>
+                                        <div>
+                                            <mat-icon class="icon-size-5 text-red-500 ml-5" svgIcon="mat_outline:close" (click)="removeDomains(i , item.Id)" matTooltip="Remove Domain" matTooltipPosition="above"></mat-icon>
+                                        </div>
+                                    </mat-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput formControlName="description" [rows]="4"></textarea>
+                                <mat-error *ngIf="appForm.get('description').hasError('required')">Please enter description
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="flex  items-center flex-auto overflow-hidden justify-end px-6 pb-6 pt-3">
+                        <button *ngIf="!updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="insertAppDetails()">
+                <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                <div *ngIf="showLoader" class="wrapper-loader">
+                    <img class="img-fluid"
+                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                </div>
+            </button>
+                        <button *ngIf="updatebutton" class="fuse-mat-button-rounded " mat-flat-button (click)="updateAppDetails()">
+                <span  *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+                <div *ngIf="showLoader" class="wrapper-loader">
+                    <img class="img-fluid"
+                        style="width: 30px; margin-left: auto; margin-right: auto;"
+                        src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                </div>
+            </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

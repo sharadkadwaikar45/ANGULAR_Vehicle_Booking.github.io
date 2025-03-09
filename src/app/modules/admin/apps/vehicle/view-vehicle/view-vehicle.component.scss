@@ -1,0 +1,17 @@
+::ng-deep .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label.mat-tab-label-active {
+    color: white !important;
+    background-color: #709ecf !important;
+}
+
+::ng-deep .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+    border-radius: 0px !important; 
+}
+
+td{
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+th{
+    text-align: left !important;
+    width: 25% !important;
+}

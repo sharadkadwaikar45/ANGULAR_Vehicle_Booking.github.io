@@ -1,0 +1,120 @@
+<div class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto bg-card m-6 shadow overflow-hidden">
+    <div class="xl:col-span-2 flex flex-col flex-auto  overflow-hidden">
+    <div *ngIf="listLoader"  class="wrapper-loader mx-auto mt-6">
+        <img class="wrapper-loader mx-auto"
+            style="width: 100px; margin-left: auto; margin-right: auto;"
+            src="assets/images/icons/movingcar.gif" alt="" class="w30 rounded-full" />
+    </div>
+    <div  *ngIf="!listLoader" >
+      <div class="flex justify-between p-4" style="align-items: center;">
+        <span class=" flex items-center   font-bold text-lg"  >Driver Details</span>
+        <div class="flex items-center">
+          <button  mat-icon-button class="flex self-center" (click)="search()">
+            <mat-icon svgIcon="mat_solid:search" class="bb icon-size-5"></mat-icon>
+          </button>
+          <button mat-icon-button class="flex self-center" [matMenuTriggerFor]="listMenu">
+            <mat-icon class="icon-size-5 bb" [svgIcon]="'mat_outline:settings'"></mat-icon>
+          </button>
+
+          <mat-menu #listMenu="matMenu" >
+            <button mat-menu-item *ngFor="let checkbox of checkboxes"(click)="$event.stopPropagation()" >
+              <mat-checkbox style="margin-left: 5px;" [(ngModel)]="checkbox.isChecked" (change)="onCheckboxChange($event)"></mat-checkbox>
+              <div style="margin-left: 5px;">{{ checkbox.label }}</div>
+            </button>
+          </mat-menu>
+          <button  class="text-white min-h-0 h-7 ml-1" style="font-size: 12px;" mat-stroked-button (click)="add()">Add</button>
+        </div>
+      </div>
+    
+     <form [formGroup]="listDetails" >
+    
+      <div *ngIf="searchField" class="flex justify-center mt-2" style="align-items: center;">
+        <mat-form-field class="example-full-width mr-6 " style="width: 70%; height: 41px">
+          <input matInput [formControl]="searchControl" placeholder="Search">
+          <div *ngIf="searchLoader" class="wrapper-loader">
+            <img class="img-fluid"
+                  style="width: 30px; margin-left: auto; margin-right: auto;"
+                  src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+          </div>
+        </mat-form-field>
+      </div>
+      <div class="mat-elevation-z8 mx-4" style="overflow-x: auto;box-shadow: none!important;">
+      <div *ngIf="listDetailsData?.length != 0">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+    
+            <ng-container matColumnDef="Sr.No" >
+              <th mat-header-cell *matHeaderCellDef > Sr.No </th>
+              <td mat-cell *matCellDef="let element; let i = index" style="width: 80px;">
+                  {{ (page - 1) * pageSize + i + 1 }}
+              </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Name</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.FirstName }} {{ element.LastName }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="MobileNumber">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Mobile</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.MobileNo }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="LicenseNo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >License No.</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="LicenseExpDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header  >License Expiry Date</th>
+                <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="JoiningDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header  >Joining Date</th>
+                <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element" style="width: 100px;">
+                    <div class="flex flex-row flex-auto overflow-hidden items-center px-2">
+                        <mat-form-field class="dropsearch status">
+                            <mat-select [(value)] = element.Active  (selectionChange)="updateStatus(element.Id, $event.value)">
+                                <mat-option *ngFor="let statuss of status" [value]="statuss.id" >
+                                    {{statuss.name}}
+                                  </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </td>
+              </ng-container>
+    
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef>Action </th>
+              <td mat-cell *matCellDef="let element" style="width: 100px;">
+                <div class="flex flex-row flex-auto overflow-hidden justify-center items-center px-2">
+                    <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="View" (click)="viewDetails(element.Id)"><mat-icon svgIcon="mat_solid:remove_red_eye" class="icon-size-4 text-yellow-400"></mat-icon></button>|
+                    <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Edit" (click)="editDetails(element.Id)"><mat-icon svgIcon="mat_solid:edit" class="icon-size-4 text-blue-400"></mat-icon></button>|
+                    <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Delete" (click)="deleteDetails(element.Id)"><mat-icon svgIcon="mat_solid:delete" class="icon-size-4 text-red-400"></mat-icon></button>
+                </div>
+              </td>
+            </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+        </table>
+       
+        <div class="flex justify-end" style="align-items: center;">
+          <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="recordsFiltered"  showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </div>
+      <div *ngIf="listDetailsData?.length === 0  " class="text-center py-3">No records found</div>
+    
+    
+      </div>
+    </form> 
+    </div>
+    </div>
+</div> 

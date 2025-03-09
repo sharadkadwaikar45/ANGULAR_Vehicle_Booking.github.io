@@ -1,0 +1,123 @@
+<div class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto bg-card m-6 shadow overflow-hidden p-4">
+    <div class="xl:col-span-2 flex flex-col flex-auto  overflow-hidden">
+        <div *ngIf="loader"  class="wrapper-loader mx-auto mt-6">
+            <img class="wrapper-loader mx-auto"
+                style="width: 100px; margin-left: auto; margin-right: auto;"
+                src="assets/images/icons/movingcar.gif" alt="" class="w30 rounded-full" />
+        </div>
+        <div *ngIf="!loader">
+            <div class="flex justify-between" style="align-items: center;">
+                <span class=" flex items-center   font-bold text-lg">Vehicle Details</span>
+                <div class="flex items-center">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 gap-x-4 w-full min-w-0 mt-4">
+                <div class="flex flex-col flex-auto items-center overflow-hidden border rounded h-100">
+                    <div class="row mt-6">
+                        <label class="flex self-center font-bold text-lg">Mercedes-Benz</label>
+                    </div>
+                    <div class="row mt-1">
+                        <label class="flex self-center">car</label>
+                    </div>
+                    <div class="flex row bg-green-500 rounded mt-6">
+                        <label class="flex self-center text-white p-2 px-4">Active</label>
+                    </div>
+                    <div class="bg-gray-200 h-0.5 w-60 my-3"></div>
+                    <div class="flex row justify-between w-full px-4">
+                        <label class="flex self-center font-medium">Total Trips</label>
+                        <label class="flex self-center font-sm">123</label>
+                    </div>
+                    <div class="bg-gray-200 h-0.5 w-60 my-3"></div>
+                    <div class="flex row justify-between w-full px-4">
+                        <label class="flex self-center font-medium">Total Earnings</label>
+                        <label class="flex self-center font-sm">1000.00</label>
+                    </div>
+                    <div class="bg-gray-200 h-0.5 w-60 my-3"></div>
+                    <div class="flex row justify-between w-full px-4">
+                        <label class="flex self-center font-medium">Total Distence Travelled</label>
+                        <label class="flex self-center font-sm">50 Km</label>
+                    </div>
+                </div>
+                <div class="flex flex-col md:col-span-3 flex-auto overflow-hidden h-100">
+                    <div class="border rounded p-4 h-100">
+                        <mat-tab-group>
+                            <mat-tab>
+                              <ng-template mat-tab-label>
+                                Basic Info
+                              </ng-template>
+                              <table>
+                                <tr>
+                                    <th>Registration No</th>
+                                    <td class="border-b">TN3</td>
+                                </tr>
+                                <tr>
+                                  <th>Name</th>
+                                  <td class="border-b">Mercedes-Benz</td>
+                                </tr>
+                                <tr>
+                                  <th>Model</th>  
+                                  <td>2017</td>      
+                                </tr>  
+                                <tr>
+                                  <th>Chasis No</th>
+                                  <td>RERE343434ET</td>
+                                </tr>
+                                <tr>
+                                  <th>Engine No</th>
+                                  <td>EFVEV2323232</td>
+                                </tr>
+                                <tr>
+                                  <th>Manufactured By</th>
+                                  <td>Mercedes</td>
+                                </tr>
+                                <tr>
+                                  <th>Type</th>
+                                  <td>Car</td>
+                                </tr>
+                            </table>
+                            </mat-tab>
+                          
+                            <mat-tab>
+                              <ng-template mat-tab-label>
+                                Images
+                              </ng-template>
+                              <div class="p-6 pb-0 grid grid-cols-6 sm:grid-cols-6 md:grid-cols-6 gap-4 gap-y-2 w-full min-w- docimg">
+                                <div *ngFor="let item of multepleEventsDocs; let i = index" class="border rounded bg-gray-50">
+                                    <div class="relative">
+                                        <mat-icon class="icon-size-5 " style="color: red; cursor: pointer; position: absolute; right:2px" (click)="deleteDoc(item.id,i)">close</mat-icon>
+                                        <img src="{{item.image}}" accept="image" class="cover" style="object-fit: contain;
+                                        height: 60px;"
+                                        (click)="openImgDialog(item.image)" />
+                                    </div>
+                                </div>
+                            </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-start mt-4">
+                <button class="text-white min-h-0 h-10 mr-2" style="font-size: 12px;" mat-stroked-button (click)="back()">Back</button>
+                <button class="text-white min-h-0 h-10" style="font-size: 12px;" mat-stroked-button (click)="editDetails()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div> 
+<div class="popcenter">
+    <ng-template #callAPIDialog>
+        <div class="flex flex-auto justify-between overflow-hidden relative"
+            *ngIf="showAllDocImg == 1 && ImagedocumentType=='alldocOpenImage'">
+            <h2 matDialogTitle class="font-medium text-xl">viewImage</h2>
+        </div>
+        <div class="p-6 overflow-hidden max-w-full relative" style="width: 50vw;">
+            <mat-icon svgIcon="mat_outline:close"
+                style="color: red; cursor: pointer; position: absolute; z-index: 111; top: 0px; right: 0px;"
+                matDialogClose="yes" (click)="close()"></mat-icon>
+            <div class="max-w-10xl">
+                <img style="height: 270px;"
+                    class="position-relative maxwh cursorpointer" title=""
+                    src="{{image}} " accept="image" />
+            </div>
+        </div>
+    </ng-template>
+</div>

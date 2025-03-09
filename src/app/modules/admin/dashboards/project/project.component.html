@@ -1,0 +1,401 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-4">
+        <div class="w-full p-4 pt-0 mx-auto">
+            <mat-tab-group
+                class="sm:px-2 pt-4"
+                [animationDuration]="'0'">
+                <mat-tab label="Admin Dashboard">
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 w-full min-w-0">
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative user">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/earning.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start ">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-20 ">Total Earnings</div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-yellow-300 z-20 ">{{userCount}}</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"   type="button" routerLink="/apps/userdata/userlist">View More
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative user">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/users.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start ">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-20 ">Total Users</div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-yellow-300 z-20 ">{{userCount}}</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"   type="button" routerLink="/apps/userdata/userlist">View More
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative booking">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-25">Total Bookings</div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-blue-500 z-20 ">1432</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative app">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/driver.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start ">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-20 "> Total Drivers</div>
+                                </div>
+                                <div class="flex flex-col  ">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-amber-800 z-20">{{appCount}}</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"  type="button" routerLink="/apps/apps/applist">View More
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon></button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative booking">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/earning.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-25">Todays Earnings</div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-blue-500 z-20 ">1432</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative vender">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-25">Venders</div>
+                                </div> 
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-red-500 z-20 ">143</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative vender">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-25">Todays Bookings</div>
+                                </div> 
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-red-500 z-20 ">143</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative app">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/driver.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start ">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-20 ">Active Drivers</div>
+                                </div>
+                                <div class="flex flex-col  ">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-amber-800 z-20">{{appCount}}</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"  type="button" routerLink="/apps/apps/applist">View More
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon></button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-8 md:grid-cols-12  gap-x-4 w-full min-w-0">
+                            <div class="md:col-span-8 flex flex-col flex-auto bg-card m-4 mx-0 shadow overflow-hidden p-4">
+                                <div class="xl:col-span-2 flex flex-col flex-auto overflow-hidden">
+                                    <div>
+                                        <div class="flex border-b" style="align-items: center;">
+                                            <span class=" flex items-center font-bold text-lg mb-4">Active driver</span>
+                                        </div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 gap-x-4 w-full min-w-0 mt-4">
+                                            <div class="flex flex-col flex-auto overflow-hidden gap-y-1 border">
+                                                <div class="flex row bg bg-gray-100 pl-4">
+                                                    <label class="flex self-center">Akshay</label>
+                                                    <img class="min-w-0 min-h-0 w-15" src="assets/images/icons/movingcar1.gif" alt="">
+                                                </div>
+                                                <div class="flex row bg bg-gray-100 pl-4">
+                                                    <label class="flex self-center">piyush</label>
+                                                    <img class="min-w-0 min-h-0 w-15" src="assets/images/icons/movingcar1.gif" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col md:col-span-3 flex-auto overflow-hidden border">
+                                                <div class="">
+                                                    <img class="min-w-0 min-h-0 w-full" src="assets/images/icons/map.jpeg" alt="">
+     
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="md:col-span-4 flex flex-col flex-auto overflow-hidden py-4">
+                                <div class="row w-full h-60 bg-card shadow mb-4 p-4">
+                                    <div class="flex justify-between mb-1 pb-4 border-b" style="align-items: center;">
+                                        <span class=" flex items-center font-bold text-lg">Reminder</span>
+                                    </div>
+                                    <div class="border-b" style="align-items: center;">
+                                        <ul>
+                                          <li class="p-2 bg-gray-100 rounded mb-1" *ngFor="let item of ['1.Need to check oil filter', '2.Battery service', '3.Tyre replacement']">
+                                            {{ item }}
+                                          </li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex justify-end pt-3" style="align-items: center;">
+                                        <button class="text-white min-h-0 h-7" style="font-size: 12px;" mat-stroked-button (click)="viewReminder()">View</button> 
+                                    </div>
+                                </div>
+                                <div class="row w-full h-60 bg-card shadow p-4">
+                                    <div class="flex justify-between mb-1 pb-4 border-b" style="align-items: center;">
+                                        <span class=" flex items-center font-bold text-lg">Fuel Details</span>
+                                    </div>
+                                    <div class="border-b" style="align-items: center;">
+                                        <ul>
+                                          <li class="p-2 bg-gray-100 rounded mb-1" *ngFor="let item of ['1. Added fuel on trip', '2.Added fuel', '3.Added fuel'];">
+                                            {{ item }} 
+                                          </li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex justify-end pt-3" style="align-items: center;">
+                                        <button class="text-white min-h-0 h-7" style="font-size: 12px;" mat-stroked-button (click)="viewFuel()">View</button> 
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto bg-card shadow overflow-hidden">
+                            <div class="xl:col-span-2 flex flex-col flex-auto  overflow-hidden">
+                                <div>
+                                    <div class="flex justify-between p-4" style="align-items: center;">
+                                        <span class=" flex items-center   font-bold text-lg">Active Trips</span>
+                                        <div class="flex items-center">
+                                        <button  mat-icon-button class="flex self-center bb" (click)="search()">
+                                          <mat-icon svgIcon="mat_solid:search" class="bb icon-size-5"></mat-icon>
+                                        </button>
+                                        <button mat-icon-button class="flex self-center bb" [matMenuTriggerFor]="listMenu">
+                                          <mat-icon class="icon-size-5 bb" [svgIcon]="'mat_outline:settings'"></mat-icon>
+                                        </button>
+                              
+                                        <mat-menu #listMenu="matMenu" >
+                                          <button mat-menu-item *ngFor="let checkbox of checkboxes"(click)="$event.stopPropagation()" >
+                                            <mat-checkbox style="margin-left: 5px;" [(ngModel)]="checkbox.isChecked" (change)="onCheckboxChange($event)"></mat-checkbox>
+                                            <div style="margin-left: 5px;">{{ checkbox.label }}</div>
+                                          </button>
+                                          <!-- <button mat-menu-item>
+                                            <div style="margin-left: 19px;">Action</div>
+                                          </button> -->
+                                        </mat-menu>
+                                        <!-- <button  class="rounded text-white min-h-0 h-7" style="font-size: 12px;" mat-stroked-button (click)="addNewApp()">Add New App</button> -->
+                                      </div>
+                                    </div>
+                                  
+                                   <form [formGroup]="userDetails" >
+                                    <div *ngIf="searchField" class="flex justify-center mt-2" style="align-items: center;">
+                                      <mat-form-field class="example-full-width mr-6 " style="width: 70%; height: 41px">
+                                        <input matInput [formControl]="searchControl" placeholder="Search">
+                                        <div *ngIf="searchLoader" class="wrapper-loader">
+                                          <img class="img-fluid"
+                                                style="width: 30px; margin-left: auto; margin-right: auto;"
+                                                src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                        </div>
+                                      </mat-form-field>
+                                  </div>
+                                    <div class="mat-elevation-z8 mx-4" style="overflow-x: auto;box-shadow: none!important;">
+                                    
+                                    <div *ngIf="userDetailsData?.length != 0">
+                                     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+                                  
+                                      <ng-container matColumnDef="Sr.No" >
+                                        <th mat-header-cell *matHeaderCellDef > Sr.No </th>
+                                        <td mat-cell *matCellDef="let element; let i = index" style="width: 80px;">
+                                            {{ (page - 1) * pageSize + i + 1 }}
+                                        </td>
+                                      </ng-container>
+                              
+                                      <ng-container matColumnDef="RingId" >
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  >Id</th>
+                                        <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.RingId }} </td>
+                                        <mat-skeleton [height]="'20px'" [width]="'40px'"></mat-skeleton>
+                                      </ng-container>
+                                  
+                                      <ng-container matColumnDef="Name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</th>
+                                        <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.FirstName }} {{ element.LastName }}</td>
+                                      </ng-container>
+                              
+                                      <ng-container matColumnDef="MobileNumber">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Custemer/User Name</th>
+                                        <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.MobileNo }} </td>
+                                      </ng-container>
+                                      
+                                      <ng-container matColumnDef="Origin">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  >Origin</th>
+                                        <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
+                                      </ng-container>
+      
+                                      <ng-container matColumnDef="Destination">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Destination</th>
+                                          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
+                                      </ng-container>
+      
+                                      <ng-container matColumnDef="Vehicle">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Vehicle</th>
+                                          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
+                                        </ng-container>
+                              
+                                      <ng-container matColumnDef="DOB">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Booking Time</th>
+                                          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+                                      </ng-container>
+                              
+                                      <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef>Status </th>
+                                        <td mat-cell *matCellDef="let element" style="width: 100px;">
+                                          <div class="flex flex-row flex-auto overflow-hidden justify-center items-center px-2">
+                                            <button class="flex  self-center  min-w-0 min-h-0 ml-1" mat-icon-button (click)="report(element.Id)"><mat-icon svgIcon="mat_solid:history" class="icon-size-4 text-blue-600"></mat-icon></button>
+                                          </div>
+                                        </td>
+                                      </ng-container>
+                                      
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        
+                                      </table>
+                                      <div class="flex justify-end" style="align-items: center;">
+                                        <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="recordsFiltered"  showFirstLastButtons>
+                                        </mat-paginator>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="userDetailsData?.length === 0  " class="text-center py-3">No records found</div>
+                                  
+                                  
+                                    </div>
+                                     
+                                  </form> 
+                                  </div>
+                            </div>
+                        </div> 
+                        
+                           
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 w-full min-w-0 mt-4">
+                                <!-- <div class="flex flex-row flex-wrap p-3 bg-card shadow rounded-2xl overflow-hidden">
+                                    <div class="flex-auto ">  
+                                        <div class="grid grid-cols-1 gap-1 w-full min-w-0">
+                                            <div class="flex flex-col flex-auto overflow-hidden">
+                                                <div class="flex">
+                                                    <img class="w-6 h-6 mr-2" src="assets/images/logo/domain.png" alt="">
+                                                    <label class="flex justify-between w-full block font-semibold text-lg  min-h-0 h-7 " >
+                                                        Domain's
+                                                        <button  class=" flex fuse-mat-button-rounded min-h-0 h-6 min-w-0 w-20" mat-flat-button >
+                                                            <span class="flex" (click)="addDomain()">
+                                                                <mat-icon class="self-center icon-size-4 mr-1" svgIcon="add" ></mat-icon>
+                                                               <span class="self-center " style="font-size: 10px;">Add</span>
+                                                            </span>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col flex-auto overflow-hidden " *ngFor="let item of domainListData; let i = index">
+                                                <div class="flex">
+                                                    <label class="flex w-full block font-medium text-sm bg-gray-100 min-h-0 h-4 cursorpointer" (click)="editDomain(item.Id)">
+                                                        <span class="flex self-center font-medium  mx-2 mr-1">
+                                                            {{i+1}} .
+                                                        </span>
+                                                       {{item.DomainName}}
+                                                    </label>
+                                                    <span class="flex self-center bg-gray-100 font-medium text-sm pr-2 min-h-0 h-4">
+                                                        {{ item.Active == 1 ? 'Active' : item.Active == 0 ? 'Inactive' : 'Unknown' }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>  -->
+                                <!-- <div class="flex flex-row flex-wrap p-3 bg-card shadow rounded-2xl overflow-hidden">
+                                    <div class="flex-auto ">  
+                                        <div class="grid grid-cols-1 gap-1  w-full min-w-0">
+                                            <div class="flex flex-col flex-auto overflow-hidden">
+                                                <div class="flex">
+                                                    <img class="w-6 h-6 mr-2" src="assets/images/logo/menu.jpg" alt="">
+                                                    <label class="flex justify-between block w-full font-semibold text-lg  min-h-0 h-7 " >
+                                                        Menu's
+                                                        <button  class=" flex self-center fuse-mat-button-rounded min-h-0 h-6 min-w-0 w-20" mat-flat-button >
+                                                            <span class="flex" (click)="addMenu()">
+                                                                <mat-icon class="self-center icon-size-4 mr-1" svgIcon="add" ></mat-icon>
+                                                               <span class="self-center " style="font-size: 10px;">Add</span>
+                                                            </span>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col flex-auto overflow-hidden " *ngFor="let item of menuListData; let i = index">
+                                                <div class="flex">
+                                                    <label class="flex w-full block font-medium text-sm bg-gray-100 min-h-0 h-4 cursorpointer" (click)="editMenu(item.Id)">
+                                                        <span class="flex self-center font-medium  mx-2  mr-1">
+                                                            {{i+1}} . 
+                                                        </span>
+                                                        {{item.MenuName}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div> -->
+                                <!-- <div class="flex flex-row flex-wrap flex-auto p-3 bg-card shadow rounded-2xl overflow-hidden card1 relative">
+                                    <div class="flex-auto ">  
+                                        <div class="grid grid-cols-1 gap-1  w-full min-w-0">
+                                            <div class="flex flex-col flex-auto overflow-hidden">
+                                                <div class="flex">
+                                                    <img class="w-6 h-6 mr-2" src="assets/images/img/pageicon.jpg" alt="">
+                                                    <label class="flex justify-between w-full block font-semibold text-lg  min-w-6 " >
+                                                        Page's
+                                                        <button  class=" flex self-center fuse-mat-button-rounded min-h-0 h-6 min-w-0 w-20" mat-flat-button >
+                                                            <span class="flex" (click)="addPages()">
+                                                                <mat-icon class="self-center w-5 h-5 mr-1" svgIcon="add" ></mat-icon>
+                                                               <span class="self-center " style="font-size: 10px;">Add</span>
+                                                            </span>
+                                                        </button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col flex-auto overflow-hidden " *ngFor="let item of pageListData; let i = index">
+                                                <div class="flex">
+                                                    <label class="flex w-full block font-medium text-sm  bg-gray-100 min-w-4 cursorpointer" (click)="editPage(item.Id)">
+                                                        <span class="flex self-center font-medium  mx-2  mr-1">
+                                                            {{i+1}} . 
+                                                        </span>
+                                                        {{item.Title ? item.Title.charAt(0).toUpperCase() + item.Title.slice(1):'' }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div></div>
+    </div>
+</div> 

@@ -1,0 +1,44 @@
+a{
+    color: #3d83f6;   
+}
+
+.dropsearch{
+    width:-webkit-fill-available!important;
+}
+
+::ng-deep .mat-form-field.dropsearch.mat-form-field-appearance-fill .mat-form-field-wrapper{
+    margin-bottom: 0 !important;
+}
+
+.pointer{
+    cursor: no-drop;
+}
+
+::ng-deep .mat-radio-outer-circle{
+    height: 15px !important;
+    width: 15px !important;
+}
+
+
+::ng-deep .mat-paginator .mat-paginator-container .mat-paginator-range-actions {
+    margin: 0px 10px 10px 0 !important;
+}
+.mat-icon-button {
+    min-width: 0 !important;
+    width: 30px !important;
+    min-height: 0 !important;
+    height: 30px !important;
+}
+
+::ng-deep .mat-paginator-icon {
+    width: 24px !important;
+}
+
+::ng-deep .mat-paginator-range-label {
+    margin: 0 10px 0 10px !important;
+}
+
+::ng-deep .mat-paginator .mat-paginator-container .mat-paginator-page-size .mat-paginator-page-size-label {
+    margin-bottom: 10px!important;
+}
+

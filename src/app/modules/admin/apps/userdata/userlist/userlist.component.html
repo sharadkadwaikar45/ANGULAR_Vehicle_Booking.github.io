@@ -1,0 +1,115 @@
+<div class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto bg-card m-6 shadow overflow-hidden">
+    <div class="xl:col-span-2 flex flex-col flex-auto  overflow-hidden">
+     <div *ngIf="listLoader"  class="wrapper-loader mx-auto mt-6">
+        <img class="wrapper-loader mx-auto"
+            style="width: 100px; margin-left: auto; margin-right: auto;"
+            src="assets/images/icons/movingcar.gif" alt="" class="w30 rounded-full" />
+    </div>
+    <div  *ngIf="!listLoader" >
+      <div class="flex justify-between p-4" style="align-items: center;">
+        <span class=" flex items-center   font-bold text-lg">User Details</span>
+        <div class="flex items-center">
+          <button  mat-icon-button class="flex self-center bb" (click)="search()">
+            <mat-icon svgIcon="mat_solid:search" class="bb icon-size-5"></mat-icon>
+          </button>
+          <button mat-icon-button class="flex self-center bb" [matMenuTriggerFor]="listMenu">
+            <mat-icon class="icon-size-5 bb" [svgIcon]="'mat_outline:settings'"></mat-icon>
+          </button>
+
+          <mat-menu #listMenu="matMenu" >
+            <button mat-menu-item *ngFor="let checkbox of checkboxes"(click)="$event.stopPropagation()" >
+              <mat-checkbox style="margin-left: 5px;" [(ngModel)]="checkbox.isChecked" (change)="onCheckboxChange($event)"></mat-checkbox>
+              <div style="margin-left: 5px;">{{ checkbox.label }}</div>
+            </button>
+            <!-- <button mat-menu-item>
+              <div style="margin-left: 19px;">Action</div>
+            </button> -->
+          </mat-menu>
+          <!-- <button  class="rounded text-white min-h-0 h-7" style="font-size: 12px;" mat-stroked-button (click)="addNewApp()">Add New App</button> -->
+        </div>
+      </div>
+    
+     <form [formGroup]="userDetails" >
+    
+      <div *ngIf="searchField" class="flex justify-center mt-2" style="align-items: center;">
+        <mat-form-field class="example-full-width mr-6 " style="width: 70%; height: 41px">
+          <input matInput [formControl]="searchControl" placeholder="Search">
+          <div *ngIf="searchLoader" class="wrapper-loader">
+            <img class="img-fluid"
+                  style="width: 30px; margin-left: auto; margin-right: auto;"
+                  src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+          </div>
+        </mat-form-field>
+    </div>
+      <div class="mat-elevation-z8 mx-4" style="overflow-x: auto;box-shadow: none!important;">
+      
+      <div *ngIf="userDetailsData?.length != 0">
+       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+    
+        <ng-container matColumnDef="Sr.No" >
+          <th mat-header-cell *matHeaderCellDef > Sr.No </th>
+          <td mat-cell *matCellDef="let element; let i = index" style="width: 80px;">
+              {{ (page - 1) * pageSize + i + 1 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="RingId" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Ring Id</th>
+          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.RingId }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Name</th>
+          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.FirstName }} {{ element.LastName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="MobileNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Mobile</th>
+          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.MobileNo }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header  >Email</th>
+          <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="DOB">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header  >Date Of Birth</th>
+            <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+          </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Status </th>
+          <td mat-cell *matCellDef="let element" style="width: 100px;">
+            <div class="flex flex-row flex-auto overflow-hidden items-center px-2">
+              <mat-form-field class="dropsearch status">
+                  <mat-select [(value)] = element.Active  (selectionChange)="updateStatus(element.Id, $event.value)">
+                      <mat-option *ngFor="let statuss of status" [value]="statuss.id" >
+                          {{statuss.name}}
+                        </mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <button class="flex  self-center w-6 min-w-0 min-h-0 ml-1" mat-icon-button (click)="report(element.Id)" matTooltipPosition="above"  matTooltip="History"><mat-icon svgIcon="mat_solid:history" class="icon-size-4 text-blue-600"></mat-icon></button>
+              <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button  (click)="deleteDetails(element.Id)" matTooltipPosition="above"  matTooltip="Delete"><mat-icon svgIcon="mat_solid:delete" class="icon-size-4 text-red-400"></mat-icon></button>
+            </div>
+          </td>
+        </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+        </table>
+        <div class="flex justify-end" style="align-items: center;">
+          <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="recordsFiltered"  showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </div>
+      <div *ngIf="userDetailsData?.length === 0  " class="text-center py-3">No records found</div>
+    
+    
+      </div>
+    </form> 
+    </div>
+    </div>
+</div> 
+    
