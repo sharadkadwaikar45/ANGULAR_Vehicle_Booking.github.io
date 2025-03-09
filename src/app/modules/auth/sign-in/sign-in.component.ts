@@ -80,7 +80,6 @@ export class AuthSignInComponent implements OnInit
                 console.log(res)
                     if(res.user.status == "online"){
                         this.Loader = false
-                        alert(1)
                         // Swal.fire({
                         //     text:  'Login successful ',
                         //     icon: 'success',
