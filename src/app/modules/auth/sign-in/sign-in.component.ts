@@ -92,6 +92,7 @@ export class AuthSignInComponent implements OnInit
                                 this._router.navigateByUrl(redirectURL);
                         //     } 
                         //   }); 
+                        
                     }else{
                         this.Loader = false
                         Swal.fire({
