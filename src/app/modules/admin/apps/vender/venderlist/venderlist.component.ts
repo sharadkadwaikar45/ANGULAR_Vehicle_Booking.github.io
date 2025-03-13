@@ -1,15 +1,148 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, AfterViewInit, OnDestroy, OnInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
+import Swal from 'sweetalert2';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { debounceTime } from 'rxjs/operators';
+import { BookingSystemService } from 'app/modules/service/bookingsystem.service';
 
 @Component({
-  selector: 'app-venderlist',
-  templateUrl: './venderlist.component.html',
-  styleUrls: ['./venderlist.component.scss']
+    selector: 'app-venderlist',
+    templateUrl: './venderlist.component.html',
+    styleUrls: ['./venderlist.component.scss'],
 })
 export class VenderlistComponent implements OnInit {
+    @ViewChild(MatPaginator) paginatior: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+    displayedColumns: string[] = ['Sr.No', 'VendorName', 'ContactPerson', 'PhoneNumber', 'Email', 'CompanyName', 'Address', 'Status', 'Actions'];
+    displayedColumns2: string[] = ['Sr.No', 'VendorName', 'ContactPerson', 'PhoneNumber', 'Email', 'CompanyName', 'Address', 'Status', 'Actions'];
 
-  constructor() { }
+    listDetailsData: any[];
+    dataSource: any;
+    listDetails: FormGroup;
+    listLoader: boolean = false;
+    searchLoader: boolean = false;
+    searchField: boolean = false;
 
-  ngOnInit(): void {
-  }
+    page: number = 1;
+    pageSize: number = 5;
+    startNum: number = 0;
+    sortValue: string = '';
+    columnIndex: number = 0;
+    recordsTotal: any;
+    recordsFiltered: any;
+    searchControl = new FormControl();
+    skeletonItems: number[] = new Array(5);
+    index :number = 1
+    pageIndex: number = 0;
 
+    status = [
+        { id: 1, name: 'Active' },
+        { id: 2, name: 'Pending' },
+        { id: 3, name: 'Inactive' },
+    ];
+
+    checkboxes = [
+      { label: 'Vendor Name', element:'VendorName', isChecked: true },
+      { label: 'Contact Person', element:'ContactPerson', isChecked: true },
+      { label: 'Phone Number', element:'PhoneNumber', isChecked: true },
+      { label: 'Email', element:'Email', isChecked: true },
+      { label: 'Company Name', element:'CompanyName', isChecked: true },
+      { label: 'Address', element:'Address', isChecked: true },
+    ];
+    dataSource2: any;
+
+    constructor(
+        private _formBuilder: FormBuilder,
+        public _route: Router,
+        public dialog: MatDialog,
+        public _activatedroute: ActivatedRoute,
+        private BookingSystemService: BookingSystemService, 
+    ) {}
+
+    ngOnInit(): void {
+        this.listLoader = true;
+        this.getData()
+        this.searchControl.valueChanges
+            .pipe(debounceTime(500))
+            .subscribe((value) => {
+                this.listDetails.value.search = value;
+                this.applyFilter(this.listDetails.value.search);
+            });
+
+        this.listDetails = this._formBuilder.group({
+            search: [''],
+        });
+        
+    }
+
+    search() {
+        this.page = 1;
+        this.pageIndex = 0
+        this.pageSize = 100;
+        this.startNum = 0;
+        this.getData();
+        this.searchField = !this.searchField;
+    }
+
+    applyFilter(filterValue) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();;
+    }
+
+    onPageChange(event: PageEvent): void {
+        console.log(event)
+        if(this.searchField == true){
+            this.searchField = !this.searchField
+        }
+        this.pageIndex = event.pageIndex
+        this.page = event.pageIndex + 1;
+        this.pageSize = event.pageSize;
+        this.startNum = this.pageSize * event.pageIndex;
+        this.getData();
+    }
+
+    onSortChange(event: MatSort) {
+        this.sortValue = event.direction;
+        this.columnIndex = this.displayedColumns.indexOf(event.active);
+        this.getData();
+    }
+
+    getData() {
+        this.index = Number(this.pageIndex * this.pageSize)
+        this.BookingSystemService.getData(0).subscribe((data) => {
+            this.listDetailsData = data
+            if (this.listDetailsData?.length != 0) {
+                let listData = this.listDetailsData.slice((this.pageIndex * this.pageSize), (this.page * this.pageSize));;
+                this.dataSource = new MatTableDataSource<any>(listData);                      
+            } 
+            this.listLoader = false;
+          },(error) => { console.error("Error loading vendors", error); }
+        );
+    }
+
+    deleteDetails(id: number) {
+        if (confirm('Are you sure you want to delete Vendor ID:' + id)) {
+            this.BookingSystemService.deleteData(0,id).subscribe((data) => {
+                Swal.fire('', 'Data deleted succesfully', 'success')
+                this.getData()
+            })
+        }
+    }
+
+    onCheckboxChange(event: Event) {
+        this.displayedColumns = [];
+        let demoArray: any[] = [];
+        this.checkboxes.forEach((item) => {
+            if (item.isChecked == false) {
+                demoArray.push(item.element);
+            }
+        });
+
+        this.displayedColumns = this.displayedColumns2.filter(
+            (element) => !demoArray.includes(element)
+        );
+    }
 }

@@ -56,6 +56,8 @@ export class ApplistComponent implements OnInit {
     public dialog: MatDialog,
     ){ }
 
+    
+
   ngOnInit() {
     this.searchControl.valueChanges
     .pipe(debounceTime(500)) 

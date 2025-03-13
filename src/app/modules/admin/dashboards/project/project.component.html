@@ -7,7 +7,7 @@
                 <mat-tab label="Admin Dashboard">
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 w-full min-w-0">
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative user">
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow overflow-hidden relative user">
                                 <div class="cardImg self-center mx-2"><img src="assets/images/icons/earning.png"></div>
                                 <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
                                 <div class="flex items-start ">
@@ -15,54 +15,14 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="text-4xl h-8 font-bold tracking-tight leading-none text-yellow-300 z-20 ">{{userCount}}</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"   type="button" routerLink="/apps/userdata/userlist">View More
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"   type="button" routerLink="/dashboards/project">View More
                                         <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
                                     </button>
                                 </div>
                                 </div>
                             </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative user">
-                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/users.png"></div>
-                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
-                                <div class="flex items-start ">
-                                    <div class="text-lg font-semibold tracking-tight truncate z-20 ">Total Users</div>
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-yellow-300 z-20 ">{{userCount}}</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"   type="button" routerLink="/apps/userdata/userlist">View More
-                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
-                                    </button>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative booking">
-                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
-                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
-                                <div class="flex items-start">
-                                    <div class="text-lg font-semibold tracking-tight truncate z-25">Total Bookings</div>
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-blue-500 z-20 ">1432</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
-                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
-                                    </button>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative app">
-                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/driver.png"></div>
-                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
-                                <div class="flex items-start ">
-                                    <div class="text-lg font-semibold tracking-tight truncate z-20 "> Total Drivers</div>
-                                </div>
-                                <div class="flex flex-col  ">
-                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-amber-800 z-20">{{appCount}}</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"  type="button" routerLink="/apps/apps/applist">View More
-                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon></button>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative booking">
+                            
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow  overflow-hidden relative booking">
                                 <div class="cardImg self-center mx-2"><img src="assets/images/icons/earning.png"></div>
                                 <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
                                 <div class="flex items-start">
@@ -70,27 +30,55 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="text-4xl h-8 font-bold tracking-tight leading-none text-blue-500 z-20 ">1432</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/dashboards/project">View More 
                                         <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
                                     </button>
                                 </div>
                                 </div>
                             </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative vender">
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow overflow-hidden relative user">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/users.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start ">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-20 ">Total Users</div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-yellow-300 z-20 ">20</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"   type="button" routerLink="/apps/users/list">View More
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow overflow-hidden relative vender">
                                 <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
                                 <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
                                 <div class="flex items-start">
                                     <div class="text-lg font-semibold tracking-tight truncate z-25">Venders</div>
                                 </div> 
                                 <div class="flex flex-col">
-                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-red-500 z-20 ">143</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-red-500 z-20 ">20</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/vender/list">View More 
                                         <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
                                     </button>
                                 </div>
                                 </div>
                             </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow overflow-hidden relative vender">
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow  overflow-hidden relative booking">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-25">Total Bookings</div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-blue-500 z-20 ">20</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/booking/list">View More 
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow overflow-hidden relative vender">
                                 <div class="cardImg self-center mx-2"><img src="assets/images/icons/global.jpg"></div>
                                 <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
                                 <div class="flex items-start">
@@ -98,28 +86,41 @@
                                 </div> 
                                 <div class="flex flex-col">
                                     <div class="text-4xl h-8 font-bold tracking-tight leading-none text-red-500 z-20 ">143</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/domain/domainlist">View More 
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500" type="button" routerLink="/apps/booking/list">View More 
                                         <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon>
                                     </button>
                                 </div>
                                 </div>
                             </div>
-                            <div class="flex flex-row flex-wrap flex-auto p-6 bg-card shadow  overflow-hidden relative app">
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow  overflow-hidden relative app">
+                                <div class="cardImg self-center mx-2"><img src="assets/images/icons/driver.png"></div>
+                                <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
+                                <div class="flex items-start ">
+                                    <div class="text-lg font-semibold tracking-tight truncate z-20 "> Total Drivers</div>
+                                </div>
+                                <div class="flex flex-col  ">
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-amber-800 z-20">20</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"  type="button" routerLink="/apps/driver/list">View More
+                                        <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon></button>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap flex-auto px-4 py-6 bg-card rounded-xl shadow  overflow-hidden relative app">
                                 <div class="cardImg self-center mx-2"><img src="assets/images/icons/driver.png"></div>
                                 <div class="bgOpacity ml-3 lg:ml-3 md:ml-3">
                                 <div class="flex items-start ">
                                     <div class="text-lg font-semibold tracking-tight truncate z-20 ">Active Drivers</div>
                                 </div>
                                 <div class="flex flex-col  ">
-                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-amber-800 z-20">{{appCount}}</div>
-                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"  type="button" routerLink="/apps/apps/applist">View More
+                                    <div class="text-4xl h-8 font-bold tracking-tight leading-none text-amber-800 z-20">20</div>
+                                    <button class="min-h-0 max-h-5 h-15 text-sm flex items-center font-medium text-left text-blue-500"  type="button" routerLink="/apps/driver/booked_driver">View More
                                         <mat-icon svgIcon="mat_solid:arrow_forward_ios" class="ml-1 text-blue-500 icon-size-3"></mat-icon></button>
                                 </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="grid sm:grid-cols-8 md:grid-cols-12  gap-x-4 w-full min-w-0">
+                        <div class="grid sm:grid-cols-8 md:grid-cols-12 gap-x-4 w-full min-w-0">
                             <div class="md:col-span-8 flex flex-col flex-auto bg-card m-4 mx-0 shadow overflow-hidden p-4">
                                 <div class="xl:col-span-2 flex flex-col flex-auto overflow-hidden">
                                     <div>

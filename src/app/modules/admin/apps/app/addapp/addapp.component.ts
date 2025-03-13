@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild ,TemplateRef} from '@angular/core';
+ import { Component, OnInit,ViewChild ,TemplateRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators,NgForm } from '@angular/forms';
 import { RingService } from 'app/modules/service/ring.service'
 import { FuseValidators } from '@fuse/validators';

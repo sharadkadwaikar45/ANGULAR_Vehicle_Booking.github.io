@@ -1,0 +1,97 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div *ngIf="Loader" class="wrapper-loader mx-auto mt-6">
+        <img class="wrapper-loader mx-auto" style="width: 100px; margin-left: auto; margin-right: auto;" src="assets/images/icons/movingcar.gif" alt="Loading..." />
+    </div>
+    <div *ngIf="!Loader" class="flex-auto">
+        <div class="w-full p-6 mx-auto">
+            <form [formGroup]="infoForm">
+                <div class="flex flex-col flex-auto bg-card shadow overflow-hidden p-6">
+                    <div class="flex justify-between border-b pb-6" style="align-items: center;">
+                        <span class="flex items-center text-black font-bold text-lg">{{formName}} Vendor Details</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 py-4 gap-y-0 w-full min-w-0">
+                        
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Vendor Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="VendorName">
+                                <mat-error *ngIf="infoForm.get('VendorName').hasError('required')">Please enter vendor name</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Contact Person<span class="red">*</span></mat-label>
+                                <input matInput formControlName="ContactPerson">
+                                <mat-error *ngIf="infoForm.get('ContactPerson').hasError('required')">Please enter contact person</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Phone Number<span class="red">*</span></mat-label>
+                                <input matInput formControlName="PhoneNumber">
+                                <mat-error *ngIf="infoForm.get('PhoneNumber').hasError('required')">Please enter phone number</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Email<span class="red">*</span></mat-label>
+                                <input matInput formControlName="Email">
+                                <mat-error *ngIf="infoForm.get('Email').hasError('required')">Please enter email</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Company Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="CompanyName">
+                                <mat-error *ngIf="infoForm.get('CompanyName').hasError('required')">Please enter company name</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Address<span class="red">*</span></mat-label>
+                                <textarea matInput formControlName="Address" rows="4"></textarea>
+                                <mat-error *ngIf="infoForm.get('Address').hasError('required')">Please enter address</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Status<span class="red">*</span></mat-label>
+                                <mat-select formControlName="Status">
+                                    <mat-option *ngFor="let stat of statusList" [value]="stat.id">
+                                        {{ stat.name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="infoForm.get('Status').hasError('required')">Please select status</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center flex-auto overflow-hidden justify-start border-t pt-6">
+                        <button class="text-white min-h-0 h-10 mr-2 backButton text-base font-bold rounded-full"  mat-stroked-button (click)="back()">Back</button>
+
+                        <button *ngIf="!updatebutton" class="text-white min-h-0 h-10  text-base font-bold rounded-full"  mat-stroked-button (click)="insert()">
+                            <span *ngIf="!showLoader">Submit</span>
+                            <div *ngIf="showLoader" class="wrapper-loader">
+                                <img class="img-fluid" style="width: 30px; margin-left: auto; margin-right: auto;" src="assets/images/img/green_spinner.gif" alt="Loading..." />
+                            </div>
+                        </button>
+
+                        <button *ngIf="updatebutton" class="text-white min-h-0 h-10  text-base font-bold rounded-full"  mat-stroked-button (click)="update()">
+                            <span *ngIf="!showLoader">Update</span>
+                            <div *ngIf="showLoader" class="wrapper-loader">
+                                <img class="img-fluid" style="width: 30px; margin-left: auto; margin-right: auto;" src="assets/images/img/green_spinner.gif" alt="Loading..." />
+                            </div>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

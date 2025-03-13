@@ -22,12 +22,12 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { VenderlistComponent } from './venderlist/venderlist.component';
-
-
+import { AddvenderComponent } from './addvender/addvender.component';
 
 @NgModule({
   declarations: [
-    VenderlistComponent
+    VenderlistComponent,
+    AddvenderComponent
   ],
   imports: [
     RouterModule.forChild(Routes),

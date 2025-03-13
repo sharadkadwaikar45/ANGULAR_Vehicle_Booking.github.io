@@ -30,30 +30,16 @@ export const defaultNavigation: FuseNavigationItem[] = [
             {
                 id   : 'apps.vender',
                 title: 'Vender Management',
-                type : 'collapsable',
+                type : 'basic',
                 icon : 'mat_outline:apps',
-                children: [
-                    {
-                        id   : 'apps.vender.venderlist',
-                        title: 'Vender List',
-                        type : 'basic',
-                        link : '/apps/vender/list'
-                    },
-                    ]
+                link : '/apps/vender/list'
             },
             {
                 id   : 'apps.booking',
                 title: 'Booking Management',
-                type : 'collapsable',
+                type : 'basic',
                 icon : 'mat_outline:commute',
-                children: [
-                    {
-                        id   : 'apps.booking.bookingdata',
-                        title: 'Booking List',
-                        type : 'basic',
-                        link : '/apps/booking/list'
-                    },
-                    ]
+                link : '/apps/booking/list'
             },
             {
                 id   : 'apps.driver',
@@ -78,23 +64,9 @@ export const defaultNavigation: FuseNavigationItem[] = [
             {
                 id   : 'apps.vehicle',
                 title: 'Vehicle Management',
-                type : 'collapsable',
-                icon : 'mat_solid:directions_car',
-                children: [
-                    {
-                        id   : 'apps.vehicle.vehical_list',
-                        title: 'Vehicle List',
-                        type : 'basic',
-                        link : '/apps/vehicle/list'
-                    },
-                          ]
-            },
-            {
-                id   : 'apps.users',
-                title: 'Users Management',
                 type : 'basic',
-                icon : 'mat_outline:people',
-                link : '/apps/users/list',
+                icon : 'mat_solid:directions_car',
+                link : '/apps/vehicle/list'
             },
             {
                 id   : 'apps.fuels',
@@ -109,6 +81,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'mat_outline:add_alarm',
                 link : '/apps/reminder/list',
+            },
+            {
+                id   : 'apps.users',
+                title: 'Users Management',
+                type : 'basic',
+                icon : 'mat_outline:people',
+                link : '/apps/users/list',
             },
             {
                 title: 'Logout',

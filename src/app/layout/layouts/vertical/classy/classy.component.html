@@ -7,7 +7,7 @@
     [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-        <div class="flex items-center w-full p-2 pl-6 m-auto">
+        <div class="flex items-center w-full h-20 p-2 pl-6 m-auto">
             <!-- Logo -->
             <div class="flex items-center justify-center mr-2">
                 <img
@@ -18,7 +18,7 @@
 
 
 
-           <div class="flex mt-6">
+           <div class="flex self-center">
                 <notifications></notifications>
                 <!-- <user [showAvatar]="false"></user> -->
             </div>  
@@ -52,7 +52,7 @@
           <!--  <languages></languages>
             <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
             <search [appearance]="'bar'"></search>
-            <shortcuts></shortcuts>
+         
             <messages></messages>
             <button
                 class="lg:hidden"
@@ -60,9 +60,10 @@
                 (click)="quickChat.toggle()">
                 <mat-icon [svgIcon]="'heroicons_outline:chat-alt-2'"></mat-icon>
             </button>-->
+            <shortcuts></shortcuts>
             <div class="flex flex-col border-l pl-2 text-right">
-                <div style="font-size: 14px;font-weight: 600;">{{userName}}</div>
-                <div style="font-size: 12px;font-weight: 400;">{{UserEmail}}</div>
+                <div style="font-size: 14px;font-weight: 600;">Admin{{userName}}</div>
+                <div style="font-size: 12px;font-weight: 400;">1234{{UserEmail}}</div>
             </div>
         </div> 
         <!-- <user></user> -->
