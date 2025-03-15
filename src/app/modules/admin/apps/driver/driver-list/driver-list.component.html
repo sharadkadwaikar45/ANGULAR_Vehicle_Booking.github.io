@@ -22,7 +22,7 @@
               <div style="margin-left: 5px;">{{ checkbox.label }}</div>
             </button>
           </mat-menu>
-          <button  class="text-white min-h-0 h-7 ml-1" style="font-size: 12px;" mat-stroked-button (click)="add()">Add</button>
+          <button  class="text-white min-h-0 h-7 ml-1" style="font-size: 12px;" mat-stroked-button routerLink="/apps/driver/add" >Add</button>
         </div>
       </div>
     
@@ -59,19 +59,29 @@
               <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.MobileNo }} </td>
             </ng-container>
             
+            <ng-container matColumnDef="DOB">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Date Of Birth</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+            </ng-container>
+
             <ng-container matColumnDef="LicenseNo">
               <th mat-header-cell *matHeaderCellDef mat-sort-header  >License No.</th>
-              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.LicenseNo }} </td>
             </ng-container>
     
             <ng-container matColumnDef="LicenseExpDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header  >License Expiry Date</th>
-                <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+                <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.LicenseExpiry) }} </td>
             </ng-container>
 
             <ng-container matColumnDef="JoiningDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header  >Joining Date</th>
-                <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.DOB) }} </td>
+                <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ convertDate(element.JoiningDate) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Address">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header  >Address</th>
+              <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Address }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Status">
@@ -93,8 +103,8 @@
               <th mat-header-cell *matHeaderCellDef>Action </th>
               <td mat-cell *matCellDef="let element" style="width: 100px;">
                 <div class="flex flex-row flex-auto overflow-hidden justify-center items-center px-2">
-                    <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="View" (click)="viewDetails(element.Id)"><mat-icon svgIcon="mat_solid:remove_red_eye" class="icon-size-4 text-yellow-400"></mat-icon></button>|
-                    <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Edit" (click)="editDetails(element.Id)"><mat-icon svgIcon="mat_solid:edit" class="icon-size-4 text-blue-400"></mat-icon></button>|
+                    <a class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Edit" [routerLink]="['/apps/driver/view', element.Id]"><mat-icon svgIcon="mat_solid:remove_red_eye" class="icon-size-4 text-yellow-400"></mat-icon></a>|
+                    <a class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Edit" [routerLink]="['/apps/driver/edit', element.Id]"><mat-icon svgIcon="mat_solid:edit" class="icon-size-4 text-blue-400"></mat-icon></a>|
                     <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Delete" (click)="deleteDetails(element.Id)"><mat-icon svgIcon="mat_solid:delete" class="icon-size-4 text-red-400"></mat-icon></button>
                 </div>
               </td>
@@ -106,7 +116,7 @@
         </table>
        
         <div class="flex justify-end" style="align-items: center;">
-          <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="recordsFiltered"  showFirstLastButtons>
+          <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="listDetailsData.length"  showFirstLastButtons>
           </mat-paginator>
         </div>
       </div>

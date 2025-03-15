@@ -4,7 +4,7 @@
     </div>
     <div *ngIf="!Loader" class="flex-auto ">
         <div class="w-full p-6 mx-auto">
-            <form [formGroup]="detailsForm">
+            <form [formGroup]="infoForm">
                 <div class="flex flex-col flex-auto bg-card shadow overflow-hidden p-6">
                     <div class="flex justify-between border-b pb-6" style="align-items: center; ">
                         <span class=" flex items-center text-black font-bold text-lg">{{formName}} Driver Details</span>
@@ -12,33 +12,54 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 py-4 gap-y-0 w-full min-w-0">
                         <div class="flex flex-col flex-auto overflow-hidden">
                             <mat-form-field class="w-full">
-                                <mat-label>Driver Name<span class="red">*</span></mat-label>
-                                <input matInput formControlName="driName">
-                                <mat-error *ngIf="detailsForm.get('driName').hasError('required')">Please enter name</mat-error>
+                                <mat-label>First Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="FirstName">
+                                <mat-error *ngIf="infoForm.get('FirstName').hasError('required')">Please enter first name</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Last Name<span class="red">*</span></mat-label>
+                                <input matInput formControlName="LastName">
+                                <mat-error *ngIf="infoForm.get('LastName').hasError('required')">Please enter last name</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col flex-auto overflow-hidden">
                             <mat-form-field class="w-full">
                                 <mat-label>Mobile No.<span class="red">*</span></mat-label>
-                                <input matInput formControlName="mobNo">
-                                <mat-error *ngIf="detailsForm.get('mobNo').hasError('required')">Please enter mobile number</mat-error>
+                                <input matInput formControlName="MobileNo">
+                                <mat-error *ngIf="infoForm.get('MobileNo').hasError('required')">Please enter mobile number</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Date Of birth<span class="red">*</span></mat-label>
+                                <input matInput formControlName="DOB">
+                                <mat-error *ngIf="infoForm.get('DOB').hasError('required')">Please select date of Date</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col flex-auto overflow-hidden">
                             <mat-form-field class="w-full">
                                 <mat-label>License No.<span class="red">*</span></mat-label>
-                                <input matInput formControlName="licNo">
-                                <mat-error *ngIf="detailsForm.get('licNo').hasError('required')">Please enter license number</mat-error>
+                                <input matInput formControlName="LicenseNo">
+                                <mat-error *ngIf="infoForm.get('LicenseNo').hasError('required')">Please enter license number</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col flex-auto overflow-hidden">
                             <mat-form-field class="w-full">
                                 <mat-label>License Expiry Date<span class="red">*</span></mat-label>
-                                <input matInput formControlName="licExpDate">
-                                <mat-error *ngIf="detailsForm.get('licExpDate').hasError('required')">Please select license expiry date</mat-error>
+                                <input matInput formControlName="LicenseExpiry">
+                                <mat-error *ngIf="infoForm.get('LicenseExpiry').hasError('required')">Please select license expiry date</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Joining Date<span class="red">*</span></mat-label>
+                                <input matInput formControlName="JoiningDate">
+                                <mat-error *ngIf="infoForm.get('JoiningDate').hasError('required')">Please select joining Date</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="flex flex-col flex-auto overflow-hidden">
                             <mat-form-field class="w-full">
                                 <mat-label>License type<span class="red">*</span></mat-label>
                                 <mat-select multiple formControlName="licType" (selectionChange)="changeDomains($event.value)">
@@ -46,36 +67,44 @@
                                         {{ item.DomainName }}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="detailsForm.get('licType').hasError('required')">Please select license type
+                                <mat-error *ngIf="infoForm.get('licType').hasError('required')">Please select license type
+                                </mat-error>
+                            </mat-form-field>
+                        </div> -->
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <mat-form-field class="w-full">
+                                <mat-label>Address<span class="red">*</span></mat-label>
+                                <textarea matInput formControlName="Address" [rows]="4"></textarea>
+                                <mat-error *ngIf="infoForm.get('Address').hasError('required')">Please enter address
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="flex flex-col flex-auto overflow-hidden">
                             <mat-form-field class="w-full">
-                                <mat-label>Address<span class="red">*</span></mat-label>
-                                <textarea matInput formControlName="address" [rows]="4"></textarea>
-                                <mat-error *ngIf="detailsForm.get('address').hasError('required')">Please enter address
-                                </mat-error>
+                                <mat-label>Status<span class="red">*</span></mat-label>
+                                <mat-select formControlName="Active">
+                                    <mat-option *ngFor="let stat of statusList" [value]="stat.id">
+                                        {{ stat.name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="infoForm.get('Active').hasError('required')">Please select status</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="flex  items-center flex-auto overflow-hidden justify-start border-t pt-6">
-                        <button class="text-white min-h-0 h-10 mr-2" style="font-size: 12px;" mat-stroked-button (click)="back()">Back</button>
+                    <div class="flex items-center flex-auto overflow-hidden justify-start border-t pt-6">
+                        <button class="text-white min-h-0 h-10 mr-2 backButton text-base font-bold rounded-full"  mat-stroked-button (click)="back()">Back</button>
 
-                        <button *ngIf="!updatebutton" class="text-white min-h-0 h-10" style="font-size: 12px;" mat-stroked-button (click)="insertDetails()">
-                            <span  *ngIf="!showLoader" style="font-size: 12px;">Submit</span>
+                        <button *ngIf="!updatebutton" class="text-white min-h-0 h-10  text-base font-bold rounded-full"  mat-stroked-button (click)="insert()">
+                            <span *ngIf="!showLoader">Submit</span>
                             <div *ngIf="showLoader" class="wrapper-loader">
-                                <img class="img-fluid"
-                                    style="width: 30px; margin-left: auto; margin-right: auto;"
-                                    src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                <img class="img-fluid" style="width: 30px; margin-left: auto; margin-right: auto;" src="assets/images/img/green_spinner.gif" alt="Loading..." />
                             </div>
                         </button>
-                        <button *ngIf="updatebutton" class="text-white min-h-0 h-10" style="font-size: 12px;" mat-stroked-button (click)="updateDetails()">
-                            <span *ngIf="!showLoader" style="font-size: 12px;">Update</span>
+
+                        <button *ngIf="updatebutton" class="text-white min-h-0 h-10  text-base font-bold rounded-full"  mat-stroked-button (click)="update()">
+                            <span *ngIf="!showLoader">Update</span>
                             <div *ngIf="showLoader" class="wrapper-loader">
-                                <img class="img-fluid"
-                                    style="width: 30px; margin-left: auto; margin-right: auto;"
-                                    src="assets/images/img/green_spinner.gif" alt="" class="w30 rounded-full" />
+                                <img class="img-fluid" style="width: 30px; margin-left: auto; margin-right: auto;" src="assets/images/img/green_spinner.gif" alt="Loading..." />
                             </div>
                         </button>
                     </div>

@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./addvender.component.scss']
 })
 export class AddvenderComponent implements OnInit {
-
 infoForm: FormGroup;
 Loader = false;
 showLoader = false;
@@ -19,7 +18,6 @@ formName = "Add";
 Id: any;
 statusList = [
   { id: 1, name: 'Active' },
-  { id: 2, name: 'Pending' },
   { id: 3, name: 'Inactive' },
 ];
 
@@ -61,7 +59,7 @@ insert() {
   }
 
   this.showLoader = true;
-  this.BookingSystemService.addData(0,this.infoForm.value).subscribe(
+  this.BookingSystemService.addData(this.infoForm.value).subscribe(
     (response) => {
       this.showLoader = false;
       this._route.navigate(['apps/vender/list'])
@@ -76,7 +74,7 @@ insert() {
 }
 
 getDataById(id){
-  this.BookingSystemService.getDataById(0,id).subscribe(
+  this.BookingSystemService.getDataById(id).subscribe(
     (response) => {
       this.bindData(response)
     })
@@ -101,7 +99,7 @@ update() {
   }
 
   this.showLoader = true;
-  this.BookingSystemService.updateData(0,Number(this.Id), this.infoForm.value).subscribe(
+  this.BookingSystemService.updateData(Number(this.Id), this.infoForm.value).subscribe(
     (response) => {
       console.log(response)
       this.showLoader = false;

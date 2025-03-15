@@ -6,18 +6,16 @@ import { GlobalService } from "app/modules/service/global.service";
 import { config } from 'app/config';
 import { environment } from '../../../environments/environment';
 import { UserService } from 'app/core/user/user.service';
-import  data  from './arrayData'
-console.log(data)
+import { userData, venderData, bookingData, driverData, bookedDriverData, vehicleData, fuelData, reminderData } from './arrayData'
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingSystemService {
-  mutableData = [...data];
  
   apiurl3: string = config.apiurl3; //campus admin
   private _authenticated: boolean = false;
-
+  Data : any
       /**
      * Setter & getter for access token
      */
@@ -51,33 +49,48 @@ public handleError(error) {
       return throwError(errorMessage);
   }
 
-  getData(index): Observable<any> {
-    return of(this.mutableData[index]);
-  }
-
-  getDataById(index,id: number): Observable<any> {
-    const item = this.mutableData[index].find(v => v.Id === Number(id));
-    return of(item);
-  }
-
-  addData(index,item): Observable<any> {
-    const lastId = this.mutableData[index].length > 0 ? Math.max(...this.mutableData[index].map(v => v.Id)) : 0;
-    item.Id = lastId + 1;
-    this.mutableData[index].push(item);
-    return of(item);
-  }
-
-  updateData(indexx, Id, item): Observable<any> {
-    const index = this.mutableData[indexx].findIndex(v => v.Id === Number(Id));
-    if (index > -1) {
-      this.mutableData[indexx][index] = { ...item, Id };
+  getArray(type) {
+    switch (type) {
+        case "user": this.Data = userData; break;
+        case "vendor": this.Data = venderData; break;
+        case "booking": this.Data = bookingData; break;
+        case "driver": this.Data = driverData; break;
+        case "bookedDriver": this.Data = bookedDriverData; break;
+        case "vehicle": this.Data = vehicleData; break;
+        case "fuel": this.Data = fuelData; break;
+        case "reminder": this.Data = reminderData; break;
+        default: this.Data = [];
+            console.warn("Invalid type provided");
     }
-    return of(this.mutableData[indexx][index]);
   }
 
-  deleteData(index,id: number): Observable<any[]> {
-    this.mutableData[index] = this.mutableData[index].filter(v => v.Id !== id);
-    return of([...this.mutableData[index]]); 
+  getData(): Observable<any> {
+    return of(this.Data);
+  }
+
+  getDataById(id: number): Observable<any> {
+    const item = this.Data.find(v => v.Id === Number(id));
+    return of(item);
+  }
+
+  addData(item): Observable<any> {
+    const lastId = this.Data.length > 0 ? Math.max(...this.Data.map(v => v.Id)) : 0;
+    item.Id = lastId + 1;
+    this.Data.push(item);
+    return of(item);
+  }
+
+  updateData( Id, item): Observable<any> {
+    const index = this.Data.findIndex(v => v.Id === Number(Id));
+    if (index > -1) {
+      this.Data[index] = { ...item, Id };
+    }
+    return of(this.Data[index]);
+  }
+
+  deleteData(id: number): Observable<any[]> {
+    this.Data = this.Data.filter(v => v.Id !== id);
+    return of([...this.Data]); 
   }
 
 }

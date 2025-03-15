@@ -1,11 +1,8 @@
-import { Component, OnInit,ViewChild ,TemplateRef} from '@angular/core';
-import { FormBuilder, FormGroup, Validators,NgForm } from '@angular/forms';
-import { RingService } from 'app/modules/service/ring.service'
-import { FuseValidators } from '@fuse/validators';
-import { GlobalService } from 'app/modules/service/global.service';
-import { MatDialog } from '@angular/material/dialog';
-import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BookingSystemService } from 'app/modules/service/bookingsystem.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-driver',
@@ -13,57 +10,124 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./add-driver.component.scss']
 })
 export class AddDriverComponent implements OnInit {
-  detailsForm : FormGroup; 
-  showLoader: boolean = false;
-  updatebutton : boolean = false;
-  Loader : boolean = false;
-  Id: any;
-  retriveData: any;
-  formName :string = 'Add'
-  
-  constructor(
-    private _formBuilder: FormBuilder,
-    private ringService : RingService,
-    public globalService: GlobalService,
-    public dialog: MatDialog,
-    public _activatedroute: ActivatedRoute,
-    public _route: Router, ) { }
+infoForm: FormGroup;
+Loader = false;
+showLoader = false;
+updatebutton = false;
+formName = "Add";
+Id: any;
+statusList = [
+  { id: 1, name: 'Active' },
+  { id: 2, name: 'Inactive' },
+];
 
-  ngOnInit(): void {
-      this.detailsForm = this._formBuilder.group({
-        driName: ['',[Validators.required]],
-        mobNo: ['',[Validators.required]],
-        licNo: ['',[Validators.required]],
-        licExpDate: ['',[Validators.required]],
-        licType: ['',[Validators.required]],
-        address: ['',[Validators.required]]
-     });
+constructor(
+  private _formBuilder: FormBuilder,
+  private BookingSystemService: BookingSystemService,
+  public _route: Router, 
+  public _activatedroute: ActivatedRoute,
+) {}
 
-     const routeParams = this._activatedroute.snapshot.params;
-     if (routeParams.id) {
-      this.formName = 'Edit';
-      this.updatebutton = true
-      this.Loader = true
-      this.Id = routeParams.id;
-      this.edit();
+ngOnInit(): void {
+  const routeParams = this._activatedroute.snapshot.params;
+  this.initializeForm()
+ 
+  if (routeParams.Id) {
+        this.formName = 'Edit';
+        this.updatebutton = true
+        this.Loader = true
+        this.Id = routeParams.Id;
+        this.getDataById(this.Id)
     }
 }
 
-edit(){
-  this.ringService.editApp(this.Id).subscribe((res) =>{
-  if(res.response_message == "Success"){
-     this.retriveData = res.response_data
-
-    //  this.detailsForm.get('Name').setValue(this.retriveData.AppName);
-    //  this.detailsForm.get('description').setValue(this.retriveData.Description);
-    //  this.detailsForm.get('packageName').setValue(this.retriveData.PackageName);
-    //  this.detailsForm.get('apiUrl').setValue(this.retriveData.ApiUrl);
-     this.Loader = false
-  }
-})
+initializeForm() {
+  this.infoForm = this._formBuilder.group({
+    FirstName: ['', Validators.required],
+    LastName: ['', Validators.required],
+    MobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+    DOB: ['', Validators.required],
+    LicenseNo: ['', Validators.required],
+    LicenseExpiry: ['', Validators.required],
+    JoiningDate: ['', Validators.required],
+    Address: ['', Validators.required],
+    Active: ['', Validators.required]
+  });
 }
 
-back(){
+insert() {
+  if (this.infoForm.invalid) {
+    return;
+  }
+
+  this.showLoader = true;
+  this.BookingSystemService.addData(this.infoForm.value).subscribe(
+    (response) => {
+      this.showLoader = false;
+      this._route.navigate(['apps/driver/list'])
+      this.infoForm.reset();
+      Swal.fire('', 'Data added successfully!', 'success')
+    },
+    (error) => {
+      this.showLoader = false;
+      Swal.fire('', 'Something went wrong..', 'error')
+    }
+  );
+}
+
+getDataById(id){
+  this.BookingSystemService.getDataById(id).subscribe(
+    (response) => {
+      this.bindData(response)
+    })
+}
+
+bindData(item) {
+  this.infoForm.patchValue({
+    FirstName: item.FirstName,
+    LastName: item.LastName,
+    MobileNo: item.MobileNo,
+    DOB: item.DOB,
+    LicenseNo: item.LicenseNo,
+    LicenseExpiry: item.LicenseExpiry,
+    JoiningDate: item.JoiningDate,
+    Address: item.Address,
+    Active: item.Active
+  });
+  this.Loader = false
+}
+
+update() {
+  if (this.infoForm.invalid || this.Id === null) {
+    return;
+  }
+
+  this.showLoader = true;
+  console.log(Number(this.Id))
+  console.log(this.infoForm.value)
+  this.BookingSystemService.updateData(Number(this.Id), this.infoForm.value).subscribe(
+    (response) => {
+      console.log(response)
+      this.showLoader = false;
+      this._route.navigate(['apps/driver/list'])
+      Swal.fire('', 'Data updated successfully!', 'success')
+      this.infoForm.reset();
+      this.updatebutton = false;
+      this.formName = "Add";
+      this.Id = null;
+    },
+    (error) => {
+      this.showLoader = false;
+      Swal.fire('', 'Something went wrong..', 'error')
+    }
+  );
+}
+
+back() {
+  this.infoForm.reset();
+  this.updatebutton = false;
+  this.formName = "Add";
+  this.Id = null;
   this._route.navigate(['apps/driver/list'])
 }
 

@@ -22,7 +22,7 @@
               <label style="margin-left: 5px;">{{ checkbox.label }}</label>
             </button>
           </mat-menu>
-          <button  class="text-white min-h-0 h-7 ml-1" style="font-size: 12px;" mat-stroked-button routerLink="/apps/vender/add_vender" >Add</button>
+          <button  class="text-white min-h-0 h-7 ml-1" style="font-size: 12px;" mat-stroked-button routerLink="/apps/vender/add" >Add</button>
         </div>
       </div>
     
@@ -42,49 +42,41 @@
       <div *ngIf="listDetailsData?.length != 0">
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <!-- Sr. No Column -->
             <ng-container matColumnDef="Sr.No">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Sr. No</th>
                 <td  mat-cell *matCellDef="let element; let i = index" style="width: 80px;"> {{ index + i + 1 }} </td>
             </ng-container>
         
-            <!-- Vendor Name Column -->
             <ng-container matColumnDef="VendorName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Vendor Name</th>
                 <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.VendorName }} </td>
             </ng-container>
         
-            <!-- Contact Person Column -->
             <ng-container matColumnDef="ContactPerson">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Person</th>
                 <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.ContactPerson }} </td>
             </ng-container>
         
-            <!-- Phone Number Column -->
             <ng-container matColumnDef="PhoneNumber">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</th>
                 <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.PhoneNumber }} </td>
             </ng-container>
         
-            <!-- Email Column -->
             <ng-container matColumnDef="Email">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
                 <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Email }} </td>
             </ng-container>
         
-            <!-- Company Name Column -->
             <ng-container matColumnDef="CompanyName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</th>
                 <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.CompanyName }} </td>
             </ng-container>
         
-            <!-- Address Column -->
             <ng-container matColumnDef="Address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
                 <td mat-cell *matCellDef="let element" style="text-align:left!important; "> {{ element.Address }} </td>
             </ng-container>
         
-            <!-- Status Column -->
             <ng-container matColumnDef="Status">
                 <th mat-header-cell *matHeaderCellDef>Status</th>
                 <td mat-cell *matCellDef="let element" style="width: 100px;">
@@ -100,32 +92,27 @@
                 </td>
             </ng-container>
         
-            <!-- Actions Column -->
             <ng-container matColumnDef="Actions">
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let element" style="width: 100px;">
                     <div class="flex flex-row flex-auto overflow-hidden justify-center items-center px-2">
-                        <a class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Edit" [routerLink]="['/apps/vender/edit_vender', element.Id]"><mat-icon svgIcon="mat_solid:edit" class="icon-size-4 text-blue-400"></mat-icon></a>|
+                        <a class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Edit" [routerLink]="['/apps/vender/edit', element.Id]"><mat-icon svgIcon="mat_solid:edit" class="icon-size-4 text-blue-400"></mat-icon></a>|
                         <button class="flex  self-center w-6 min-w-0 min-h-0 " mat-icon-button matTooltipPosition="above"  matTooltip="Delete" (click)="deleteDetails(element.Id)"><mat-icon svgIcon="mat_solid:delete" class="icon-size-4 text-red-400"></mat-icon></button>
                     </div>
                 </td>
             </ng-container>
         
-            <!-- Table Rows -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         
         </table>
-        
-       
+
         <div class="flex justify-end" style="align-items: center;">
           <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="listDetailsData.length"  showFirstLastButtons>
           </mat-paginator>
         </div>
       </div>
       <div *ngIf="listDetailsData?.length === 0  " class="text-center py-3">No records found</div>
-    
-    
       </div>
     </form> 
     </div>

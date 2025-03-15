@@ -8,11 +8,11 @@ export const Routes: Route[] = [
         component: VenderlistComponent,
     },
     {
-        path:'add_vender',
+        path:'add',
         component:AddvenderComponent,
     },
     {
-        path:'edit_vender/:Id',
+        path:'edit/:Id',
         component:AddvenderComponent,
     }
 ];

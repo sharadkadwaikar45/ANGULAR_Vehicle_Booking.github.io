@@ -18,6 +18,9 @@ import { ProjectComponent } from 'app/modules/admin/dashboards/project/project.c
 import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { UserlistComponent } from 'app/modules/admin/apps/userdata/userlist/userlist.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +44,8 @@ import {MatTableModule} from '@angular/material/table';
         SharedModule,
         MatPaginatorModule,
         MatInputModule,
-       
+        MatCheckboxModule,
+        MatFormFieldModule
     ]
 })
 export class ProjectModule

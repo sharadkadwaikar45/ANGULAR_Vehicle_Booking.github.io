@@ -44,22 +44,9 @@ export const defaultNavigation: FuseNavigationItem[] = [
             {
                 id   : 'apps.driver',
                 title: 'Driver Management',
-                type : 'collapsable',
+                type : 'basic',
                 icon : 'mat_outline:filter_tilt_shift',
-                children: [
-                    {
-                        id   : 'apps.driver.list',
-                        title: 'Driver List',
-                        type : 'basic',
-                        link : '/apps/driver/list'
-                    },
-                    {
-                        id   : 'apps.driver.booked_driver',
-                        title: 'Booked Driver',
-                        type : 'basic',
-                        link : '/apps/driver/booked_driver'
-                    },
-                          ]
+                link : '/apps/driver/list'
             },
             {
                 id   : 'apps.vehicle',

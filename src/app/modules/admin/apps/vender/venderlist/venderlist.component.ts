@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, AfterViewInit, OnDestroy, OnInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
+import { Component,  OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs/operators';
@@ -53,7 +53,6 @@ export class VenderlistComponent implements OnInit {
       { label: 'Company Name', element:'CompanyName', isChecked: true },
       { label: 'Address', element:'Address', isChecked: true },
     ];
-    dataSource2: any;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -64,6 +63,7 @@ export class VenderlistComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.BookingSystemService.getArray("vendor")
         this.listLoader = true;
         this.getData()
         this.searchControl.valueChanges
@@ -112,20 +112,20 @@ export class VenderlistComponent implements OnInit {
 
     getData() {
         this.index = Number(this.pageIndex * this.pageSize)
-        this.BookingSystemService.getData(0).subscribe((data) => {
+        this.BookingSystemService.getData().subscribe((data) => {
             this.listDetailsData = data
             if (this.listDetailsData?.length != 0) {
                 let listData = this.listDetailsData.slice((this.pageIndex * this.pageSize), (this.page * this.pageSize));;
                 this.dataSource = new MatTableDataSource<any>(listData);                      
             } 
             this.listLoader = false;
-          },(error) => { console.error("Error loading vendors", error); }
+          },(error) => { console.error("Error loading data", error); }
         );
     }
 
     deleteDetails(id: number) {
-        if (confirm('Are you sure you want to delete Vendor ID:' + id)) {
-            this.BookingSystemService.deleteData(0,id).subscribe((data) => {
+        if (confirm('Are you sure you want to delete details')) {
+            this.BookingSystemService.deleteData(id).subscribe((data) => {
                 Swal.fire('', 'Data deleted succesfully', 'success')
                 this.getData()
             })
@@ -145,4 +145,7 @@ export class VenderlistComponent implements OnInit {
             (element) => !demoArray.includes(element)
         );
     }
+
+    updateStatus(){}
+
 }

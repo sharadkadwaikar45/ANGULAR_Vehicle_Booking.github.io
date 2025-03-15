@@ -102,7 +102,7 @@
           
         </table>
         <div class="flex justify-end" style="align-items: center;">
-          <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="recordsFiltered"  showFirstLastButtons>
+          <mat-paginator  [pageSize]="pageSize" (page)="onPageChange($event)" [pageSizeOptions]="[5,10,25,100]"  [length]="listDetailsData.length"  showFirstLastButtons>
           </mat-paginator>
         </div>
       </div>

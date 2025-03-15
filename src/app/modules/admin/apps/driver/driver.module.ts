@@ -21,7 +21,6 @@ import { Routes } from './driver.routing';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { BookedDriverComponent } from './booked-driver/booked-driver.component';
 import { DriverListComponent } from './driver-list/driver-list.component';
 import { AddDriverComponent } from './add-driver/add-driver.component';
 import { ViewDriverComponent } from './view-driver/view-driver.component';
@@ -29,7 +28,6 @@ import { ViewDriverComponent } from './view-driver/view-driver.component';
 
 @NgModule({
   declarations: [
-    BookedDriverComponent,
     DriverListComponent,
     AddDriverComponent,
     ViewDriverComponent

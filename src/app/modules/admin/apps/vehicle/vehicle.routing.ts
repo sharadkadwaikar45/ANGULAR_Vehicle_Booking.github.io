@@ -13,7 +13,7 @@ export const Routes: Route[] = [
         component: AddVehicleComponent,
     },
     {
-        path     :'edit/:id',
+        path     :'edit/:Id',
         component:AddVehicleComponent
     },
     {

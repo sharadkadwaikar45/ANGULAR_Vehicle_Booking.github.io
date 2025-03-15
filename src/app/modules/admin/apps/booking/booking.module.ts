@@ -22,14 +22,11 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { BookingListComponent } from './booking-list/booking-list.component';
-import { AddBookingComponent } from './add-booking/add-booking.component';
-
-
 
 @NgModule({
   declarations: [
-    BookingListComponent,
-    AddBookingComponent
+    BookingListComponent
+    
   ],
   imports: [
     RouterModule.forChild(Routes),
