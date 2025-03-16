@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { BookingSystemService } from 'app/modules/service/bookingsystem.service'
   templateUrl: './booking-list.component.html',
   styleUrls: ['./booking-list.component.scss']
 })
-export class BookingListComponent implements OnInit {
+export class BookingListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginatior: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['Sr.No','CustName','DriName','Vehicle','Type','StartPlace','EndPlace','Status','Actions'];
@@ -76,7 +76,10 @@ export class BookingListComponent implements OnInit {
         this.listDetails = this._formBuilder.group({
             search: [''],
         });
-        
+    }
+
+    ngAfterViewInit() {
+        this.dataSource.sort = this.sort;
     }
 
     search() {

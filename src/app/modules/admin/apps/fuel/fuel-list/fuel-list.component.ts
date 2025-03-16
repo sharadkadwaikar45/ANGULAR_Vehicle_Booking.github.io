@@ -1,4 +1,4 @@
-import { Component,  OnInit, ViewChild} from '@angular/core';
+import { Component,  OnInit, TemplateRef, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,6 +15,8 @@ import { BookingSystemService } from 'app/modules/service/bookingsystem.service'
   styleUrls: ['./fuel-list.component.scss']
 })
 export class FuelListComponent implements OnInit {
+  @ViewChild('callAPIDialog') callAPIDialog: TemplateRef<any>;
+
   @ViewChild(MatPaginator) paginatior: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['Sr.No','FuelFillDate','Vehicle','Quantity','FuelTotalPrice','FuelfilledBy','Comment','Image','Status','Actions'];
@@ -55,6 +57,7 @@ export class FuelListComponent implements OnInit {
         { label: 'Comment', element:'Comment', isChecked: true },
         { label: 'Image', element:'Image', isChecked: true },
       ];
+    image: any;
   
       constructor(
           private _formBuilder: FormBuilder,
@@ -169,6 +172,16 @@ export class FuelListComponent implements OnInit {
       }
 
       updateStatus(){}
+
+      openImgDialog(img) {
+        const dialogRef = this.dialog.open(this.callAPIDialog);
+        dialogRef.afterClosed().subscribe((result) => { });
+        this.image = img;
+      }
+      
+      close() {
+        this.dialog.closeAll();
+      }
 
   }
   

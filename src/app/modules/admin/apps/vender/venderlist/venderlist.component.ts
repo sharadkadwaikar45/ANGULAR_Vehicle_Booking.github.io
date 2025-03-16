@@ -1,4 +1,4 @@
-import { Component,  OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component,  OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { BookingSystemService } from 'app/modules/service/bookingsystem.service'
     templateUrl: './venderlist.component.html',
     styleUrls: ['./venderlist.component.scss'],
 })
-export class VenderlistComponent implements OnInit {
+export class VenderlistComponent implements OnInit , AfterViewInit{
     @ViewChild(MatPaginator) paginatior: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     displayedColumns: string[] = ['Sr.No', 'VendorName', 'ContactPerson', 'PhoneNumber', 'Email', 'CompanyName', 'Address', 'Status', 'Actions'];
@@ -75,8 +75,11 @@ export class VenderlistComponent implements OnInit {
 
         this.listDetails = this._formBuilder.group({
             search: [''],
-        });
-        
+        }); 
+    }
+
+    ngAfterViewInit() {
+        this.dataSource.sort = this.sort;
     }
 
     search() {
@@ -105,6 +108,7 @@ export class VenderlistComponent implements OnInit {
     }
 
     onSortChange(event: MatSort) {
+        console.log(event)
         this.sortValue = event.direction;
         this.columnIndex = this.displayedColumns.indexOf(event.active);
         this.getData();
